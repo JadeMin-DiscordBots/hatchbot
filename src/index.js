@@ -6,7 +6,6 @@ import {
 	ButtonStyleTypes, TextStyleTypes,
 	verifyKey
 } from 'discord-interactions';
-let env = null;
 const Router = IttyRouter();
 let Logger = null;
 let ALS = null;
@@ -148,10 +147,9 @@ Router.all('*', async request => {
 
 
 export default {
-	async fetch(request, thisEnv, context) {
-		env = thisEnv;
-		Logger = new WebLogger(thisEnv.LOG_WEBHOOK_ID, thisEnv.LOG_WEBHOOK_TOKEN);
-		ALS = new ALS_API(thisEnv.ALS_TOKEN);
+	async fetch(request, env, context) {
+		Logger = new WebLogger(env.LOG_WEBHOOK_ID, env.LOG_WEBHOOK_TOKEN);
+		ALS = new ALS_API(env.ALS_TOKEN);
 
 		console.log(JSON.stringify(request));
 		if(request.method === 'POST') {
@@ -159,7 +157,7 @@ export default {
 			const timestamp = request.headers.get('x-signature-timestamp');
 			const body = await request.clone().arrayBuffer();
 			
-			if(!verifyKey(body, signature, timestamp, thisEnv.DISCORD_PUBLIC_KEY)) {
+			if(!verifyKey(body, signature, timestamp, env.DISCORD_PUBLIC_KEY)) {
 				Logger.log(`WARN: Signature verification failed!\`\`\`${JSON.stringify(body)}\`\`\``);
 				return new Response("Signature verification failed", {status: 401});
 			}
