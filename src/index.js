@@ -6,7 +6,6 @@ import {
 	ButtonStyleTypes, TextStyleTypes,
 	verifyKey
 } from 'discord-interactions';
-
 const Router = IttyRouter();
 let Logger = null;
 let ALS = null;
