@@ -1,0 +1,16 @@
+{
+	"name": "sayhi-bot",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"start": "wrangler dev",
+		"deploy": "wrangler publish"
+	},
+	"dependencies": {
+		"itty-router": "^2.6.6",
+		"discord-interactions": "^3.2.0"
+	},
+	"devDependencies": {
+		"wrangler": "2.6.1"
+	}
+}
