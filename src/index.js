@@ -72,27 +72,47 @@ Router.post('/', async request => {
 	if(message.type == InteractionType.APPLICATION_COMMAND) {
 		switch (message.data.name) {
 			case "hi": {
-				if(message.guild_id != "857554848885768212") {
-					return new JsonResponse({
-						type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-						data: {
-							content: `> **안녕하세요!**\n\n현재 아쉽게도 대부분의 기능은 개발자용 서버에서만 이용하실 수 있어요.\n대신 방금 대답한 것처럼 사용하신 명령어에 알맞은 답변 정도는 드릴게요!`
-						}
-					});
-				} else {
-					/*return new JsonResponse({
-						type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-						data: {
-							content: `<@${message.member.user.id}> <@725658175235162132> <@636868384935641088> <@842298942367465492>`
-						}
-					});*/
-					return new JsonResponse({
-						type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-						data: {
-							content: `> **이 명령어는 비활성화됐습니다.**\n\n대신 \`\`!hi\`\` 명령어를 사용해주세요.`
-						}
-					});
-				}
+				return new JsonResponse({
+					type: InteractionResponseType.APPLICATION_MODAL,
+					data: {
+						content: `sival`,
+						embeds: [{
+							type: "rich",
+							title: `이것은 타이틀`,
+							description: `이것은 설명`,
+							color: 0xff0000,
+							fields: [{
+								name: `필트 네임`,
+								value: `필드 밸류`,
+								inline: true
+							}],
+							image: {
+								url: `https://this.is.img.url/`,
+								proxy_url: `https://this.is.img.proxy.url/`,
+								height: null,
+								width: null
+							},
+							thumbnail: {
+								url: `https://this.is.thumbnail.url/`,
+								proxy_url: `https://this.is.thumbnail.proxy.url/`,
+								height: null,
+								width: null
+							},
+							author: {
+								name: `이것은 아더 네임`,
+								url: `https://this.is.author.url/`,
+								icon_url: `https://this.is.author.icon.url/`,
+								proxy_icon_url: `https://this.is.author.icon.proxy.url/`
+							},
+							footer: {
+								text: `이것은 발냄새 텍스트`,
+								icon_url: `https://this.is.footer.icon.url/`,
+								proxy_icon_url: `https://this.is.footer.icon.proxy.url/`
+							},
+							url: `https://this.is.fucking.url/yknow?`
+						}]
+					}
+				});
 			};
 			case "맵": {
 				//Logger.log(`\`\`\`json\n${JSON.stringify(message, null, '\t')}\`\`\``);
