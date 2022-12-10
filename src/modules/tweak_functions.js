@@ -64,7 +64,7 @@ export class WebLogger {
 				content: message
 			})
 		});
-
+		
 		return response.json();
 	};
 };
