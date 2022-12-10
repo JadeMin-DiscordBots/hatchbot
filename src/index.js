@@ -72,57 +72,50 @@ Router.post('/', async request => {
 	if(message.type == InteractionType.APPLICATION_COMMAND) {
 		switch (message.data.name) {
 			case "hi": {
-				return new JsonResponse({
-					type: InteractionResponseType.APPLICATION_MODAL,
-					data: {
-						content: `sival`,
-						embeds: [{
-							type: "rich",
-							title: `이것은 타이틀`,
-							description: `이것은 설명`,
-							color: 0xff0000,
-							fields: [{
-								name: `필트 네임`,
-								value: `필드 밸류`,
-								inline: true
-							}],
-							image: {
-								url: `https://this.is.img.url/`,
-								proxy_url: `https://this.is.img.proxy.url/`,
-								height: null,
-								width: null
-							},
-							thumbnail: {
-								url: `https://this.is.thumbnail.url/`,
-								proxy_url: `https://this.is.thumbnail.proxy.url/`,
-								height: null,
-								width: null
-							},
-							author: {
-								name: `이것은 아더 네임`,
-								url: `https://this.is.author.url/`,
-								icon_url: `https://this.is.author.icon.url/`,
-								proxy_icon_url: `https://this.is.author.icon.proxy.url/`
-							},
-							footer: {
-								text: `이것은 발냄새 텍스트`,
-								icon_url: `https://this.is.footer.icon.url/`,
-								proxy_icon_url: `https://this.is.footer.icon.proxy.url/`
-							},
-							url: `https://this.is.fucking.url/yknow?`
-						}]
-					}
-				});
+				if(message.guild_id != "857554848885768212") {
+					return new JsonResponse({
+						type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+						data: {
+							content: `> **안녕하세요!**\n\n현재 아쉽게도 대부분의 기능은 개발자용 서버에서만 이용하실 수 있어요.\n대신 방금 대답한 것처럼 사용하신 명령어에 알맞은 답변 정도는 드릴게요!`
+						}
+					});
+				} else {
+					/*return new JsonResponse({
+						type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+						data: {
+							content: `<@${message.member.user.id}> <@725658175235162132> <@636868384935641088> <@842298942367465492>`
+						}
+					});*/
+					return new JsonResponse({
+						type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+						data: {
+							content: `> **이 명령어는 비활성화됐습니다.**\n\n대신 \`\`!hi\`\` 명령어를 사용해주세요.`
+						}
+					});
+				}
 			};
 			case "맵": {
 				//Logger.log(`\`\`\`json\n${JSON.stringify(message, null, '\t')}\`\`\``);
-				const selectedMode = message.data["options"]? message.data.options[0].value : "battle_royale";
-				const als_data = await ALS.send("maprotation", {version: 2});
+				const als = await ALS.send("maprotation", {version: 2});
+				const selectedOption = message.data?.options?.[0]?.value ?? "battle_royale";
+				const gamemodeName = ALS.lang('gamemode', selectedOption);
+				const data = als[selectedOption];
 
 				return new JsonResponse({
 					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 					data: {
-						content: `> **\`\`${ALS.lang('gamemode', selectedMode)}\`\` 맵 정보**\n\n현재 맵 : \`\`${als_data[selectedMode].current.map}\`\`\n다음 맵 : \`\`${als_data[selectedMode].next.map}\`\``
+						embeds: [{
+							title: `${gamemodeName} 맵 정보`,
+							description: `이 게임모드는 ${Object.values(data)[0].current.DurationInMinutes}분마다 맵이 변경됩니다.`,
+						}, {
+							title: ":map: 현재 맵",
+							description: `${data.current.map} | <t:${data.current.start}:R>에 시작됩니다.`,
+							image: {"url": data.current.asset}
+						}, {
+							title: ":map: 다음 맵",
+							description: `${data.next.map} | <t:${data.next.start}:R>에 시작됩니다.`,
+							image: {"url": data.next.asset}
+						}]
 					}
 				});
 			};
@@ -171,7 +164,7 @@ export default {
 		Logger = new WebLogger(env.LOG_WEBHOOK_ID, env.LOG_WEBHOOK_TOKEN);
 		ALS = new ALS_API(env.ALS_TOKEN);
 
-		console.log(request);
+		console.log(JSON.stringify(request));
 		if(request.method === 'POST') {
 			const signature = request.headers.get('x-signature-ed25519');
 			const timestamp = request.headers.get('x-signature-timestamp');

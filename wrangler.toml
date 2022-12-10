@@ -1,3 +1,6 @@
 name = "sayhi-bot"
 main = "src/index.js"
 compatibility_date = "2022-12-07"
+routes = [
+	{ zone_name="klartnet.ml", pattern="sayhi.discord.klartnet.ml", custom_domain=true }
+]

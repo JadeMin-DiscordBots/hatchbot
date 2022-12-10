@@ -11,6 +11,21 @@ export class JsonResponse extends Response {
 
 
 
+/*export class DIntl {
+	constructor(options) {
+		this.intl = new Intl.DateTimeFormat('ko-KR', options ?? {
+			timeStyle: 'short',
+			timeZone: "Asia/Seoul"
+		});
+	};
+
+	format(date, flag) {
+		return `<t:${this.intl.format(date)}:${flag}>`;
+	}
+};*/
+
+
+
 export class ALS_API {
 	constructor(token) {
 		this.token = token;
