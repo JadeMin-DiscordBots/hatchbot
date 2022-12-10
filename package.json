@@ -7,10 +7,10 @@
 		"deploy": "wrangler publish"
 	},
 	"dependencies": {
-		"itty-router": "^2.6.6",
-		"discord-interactions": "^3.2.0"
+		"discord-interactions": "^3.2.0",
+		"itty-router": "^2.6.6"
 	},
 	"devDependencies": {
-		"wrangler": "2.6.1"
+		"wrangler": "^2.6.2"
 	}
 }
