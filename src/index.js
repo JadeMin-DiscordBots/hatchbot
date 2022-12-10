@@ -1,5 +1,5 @@
 import { Router as IttyRouter } from 'itty-router';
-import { JsonResponse, ALS_API, WebLogger, escapeMarkdown } from "./modules/tweak_functions.js";
+import { JsonResponse, ALS_API, WebLogger, kIntl, escapeMarkdown } from "./modules/tweak_functions.js";
 import {
 	InteractionType, InteractionResponseType, InteractionResponseFlags,
 	MessageComponentTypes,
@@ -107,12 +107,12 @@ Router.post('/', async request => {
 							title: `:map: \`${gamemodeName}\` 현재 맵`,
 							description: `**${data.current.map}** | <t:${data.current.start}:R>에 시작되었습니다.`,
 							image: {"url": data.current.asset},
-							footer: {"text": `이 모드는 ${data.current.DurationInMinutes}분마다 맵이 변경됩니다`}
+							footer: {"text": `현재 이 모드는 ${kIntl(data.current.DurationInMinutes)}마다 맵이 변경됩니다`}
 						}, {
 							title: `:map: \`${gamemodeName}\` 다음 맵`,
 							description: `**${data.next.map}** | <t:${data.next.start}:R>에 시작됩니다.`,
 							image: {"url": data.next.asset},
-							footer: {"text": `이 모드는 ${data.next.DurationInMinutes}분마다 맵이 변경됩니다`}
+							footer: {"text": `현재 이 모드는 ${kIntl(data.next.DurationInMinutes)}마다 맵이 변경됩니다`}
 						}]
 					}
 				});

@@ -1,6 +1,7 @@
 import { ALS_KO } from "./tweak_functions.json";
 
 
+
 export class JsonResponse extends Response {
 	constructor(body, init) {
 		super(JSON.stringify(body), init ?? {
@@ -9,20 +10,6 @@ export class JsonResponse extends Response {
 	};
 };
 
-
-
-/*export class DIntl {
-	constructor(options) {
-		this.intl = new Intl.DateTimeFormat('ko-KR', options ?? {
-			timeStyle: 'short',
-			timeZone: "Asia/Seoul"
-		});
-	};
-
-	format(date, flag) {
-		return `<t:${this.intl.format(date)}:${flag}>`;
-	}
-};*/
 
 
 
@@ -62,6 +49,7 @@ export class ALS_API {
 
 
 
+
 export class WebLogger {
 	constructor(id, token) {
 		this.id = id;
@@ -80,6 +68,64 @@ export class WebLogger {
 		return response.json();
 	};
 };
+
+
+
+
+export const kIntl = minutes => {
+	const years = 525600,
+		months = 43800,
+		days = 1440,
+		hours = 60;
+	let result = {
+		mins: 0,
+		hrs: 0,
+		dys: 0,
+		ths: 0,
+		yrs: 0
+	};
+	const format = r => {
+		let str = '';
+		if(r.yrs > 0) str += `${r.yrs}년 `;
+		if(r.ths > 0) str += `${r.ths}달 `;
+		if(r.dys > 0) str += `${r.dys}일 `;
+		if(r.hrs > 0) str += `${r.hrs}시간 `;
+		if(r.mins > 0) str += `${r.mins}분 `;
+
+		return str.trim();
+	}
+	
+	
+	(function $(){
+		if(minutes-years >= 0) {
+			minutes -= years;
+			result.yrs += 1;
+			$();
+		} else (function $(){
+			if(minutes-months >= 0) {
+				minutes -= 43800;
+				result.ths += 1;
+				$();
+			} else (function $(){
+				if(minutes-days >= 0) {
+					minutes -= 1440;
+					result.dys += 1;
+					$();
+				} else (function $(){
+					if(minutes-hours >= 0) {
+						minutes -= 60;
+						result.hrs += 1;
+						$();
+					} else {
+						result.mins += minutes;
+					}
+				})();
+			})();
+		})();
+	})();
+	return format(result);
+};
+
 
 
 
