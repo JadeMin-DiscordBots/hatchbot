@@ -64,7 +64,7 @@ export class WebLogger {
 				content: message
 			})
 		});
-		
+
 		return response.json();
 	};
 };
@@ -103,17 +103,17 @@ export const kIntl = minutes => {
 			$();
 		} else (function $(){
 			if(minutes-months >= 0) {
-				minutes -= 43800;
+				minutes -= months;
 				result.ths += 1;
 				$();
 			} else (function $(){
 				if(minutes-days >= 0) {
-					minutes -= 1440;
+					minutes -= days;
 					result.dys += 1;
 					$();
 				} else (function $(){
 					if(minutes-hours >= 0) {
-						minutes -= 60;
+						minutes -= hours;
 						result.hrs += 1;
 						$();
 					} else {
