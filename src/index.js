@@ -105,14 +105,11 @@ Router.post('/', async request => {
 					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 					data: {
 						embeds: [{
-							title: `${gamemodeName} 맵 정보`,
-							description: `이 게임모드는 ${Object.values(data)[0].current.DurationInMinutes}분마다 맵이 변경됩니다.`,
-						}, {
-							title: ":map: 현재 맵",
+							title: `:map: \`${gamemodeName}\` 현재 맵`,
 							description: `${data.current.map} | <t:${data.current.start}:R>에 시작됩니다.`,
 							image: {"url": data.current.asset}
 						}, {
-							title: ":map: 다음 맵",
+							title: `:map: \`${gamemodeName}\` 현재 맵`,
 							description: `${data.next.map} | <t:${data.next.start}:R>에 시작됩니다.`,
 							image: {"url": data.next.asset}
 						}]
