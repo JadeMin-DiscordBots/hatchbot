@@ -1,4 +1,5 @@
 import { Router as IttyRouter } from 'itty-router';
+import Text from 'korean-js/text';
 import { JsonResponse, ALS_API, WebLogger, escapeMarkdown } from "./modules/tweak_functions.js";
 import {
 	InteractionType, InteractionResponseType, InteractionResponseFlags,
@@ -95,7 +96,6 @@ Router.post('/', async request => {
 				}
 			};
 			case "맵": {
-				//Logger.log(`\`\`\`json\n${JSON.stringify(message, null, '\t')}\`\`\``);
 				const als = await ALS.send("maprotation", {version: 2});
 				const selectedOption = message.data?.options?.[0]?.value ?? "battle_royale";
 				const gamemodeName = ALS.lang('gamemode', selectedOption);
@@ -106,12 +106,14 @@ Router.post('/', async request => {
 					data: {
 						embeds: [{
 							title: `:map: \`${gamemodeName}\` 현재 맵`,
-							description: `${data.current.map} | <t:${data.current.start}:R>에 시작됩니다.`,
-							image: {"url": data.current.asset}
+							description: `**${data.current.map}** | <t:${data.current.start}:R>에 시작되었습니다.`,
+							image: {"url": data.current.asset},
+							footer: {"text": `이 모드는 ${Text.dataMode(data.current.DurationInMinutes, )}분마다 맵이 변경됩니다`}
 						}, {
-							title: `:map: \`${gamemodeName}\` 현재 맵`,
-							description: `${data.next.map} | <t:${data.next.start}:R>에 시작됩니다.`,
-							image: {"url": data.next.asset}
+							title: `:map: \`${gamemodeName}\` 다음 맵`,
+							description: `**${data.next.map}** | <t:${data.next.start}:R>에 시작됩니다.`,
+							image: {"url": data.next.asset},
+							footer: {"text": `이 모드는 ${data.next.DurationInMinutes}분마다 맵이 변경됩니다`}
 						}]
 					}
 				});
