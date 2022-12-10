@@ -12,7 +12,7 @@ export class JsonResponse extends Response {
 
 
 export class ALS_API {
-	constructor(token=null) {
+	constructor(token) {
 		this.token = token;
 		this._CONFIG = ALS_KO;
 	};

@@ -151,7 +151,7 @@ export default {
 		Logger = new WebLogger(env.LOG_WEBHOOK_ID, env.LOG_WEBHOOK_TOKEN);
 		ALS = new ALS_API(env.ALS_TOKEN);
 
-		console.log(JSON.stringify(request));
+		console.log(request);
 		if(request.method === 'POST') {
 			const signature = request.headers.get('x-signature-ed25519');
 			const timestamp = request.headers.get('x-signature-timestamp');
