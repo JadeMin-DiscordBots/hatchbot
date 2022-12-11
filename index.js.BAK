@@ -71,6 +71,29 @@ Router.post('/', async request => {
 	// 리퀘스트: 슬래시 커맨드
 	if(message.type == InteractionType.APPLICATION_COMMAND) {
 		switch (message.data.name) {
+			case "hi": {
+				if(message.guild_id != "857554848885768212") {
+					return new JsonResponse({
+						type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+						data: {
+							content: `> **안녕하세요!**\n\n현재 아쉽게도 대부분의 기능은 개발자용 서버에서만 이용하실 수 있어요.\n대신 방금 대답한 것처럼 사용하신 명령어에 알맞은 답변 정도는 드릴게요!`
+						}
+					});
+				} else {
+					/*return new JsonResponse({
+						type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+						data: {
+							content: `<@${message.member.user.id}> <@725658175235162132> <@636868384935641088> <@842298942367465492>`
+						}
+					});*/
+					return new JsonResponse({
+						type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+						data: {
+							content: `> **이 명령어는 비활성화됐습니다.**\n\n대신 \`\`!hi\`\` 명령어를 사용해주세요.`
+						}
+					});
+				}
+			};
 			case "맵": {
 				const als = await ALS.send("maprotation", {version: 2});
 				const selectedOption = message.data?.options?.[0]?.value ?? "battle_royale";
