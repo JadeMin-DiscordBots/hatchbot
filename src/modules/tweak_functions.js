@@ -72,58 +72,33 @@ export class WebLogger {
 
 
 
-export const kIntl = minutes => {
-	const years = 525600,
-		months = 43800,
-		days = 1440,
-		hours = 60;
-	let result = {
-		mins: 0,
-		hrs: 0,
-		dys: 0,
-		ths: 0,
-		yrs: 0
-	};
-	const format = r => {
-		let str = '';
-		if(r.yrs > 0) str += `${r.yrs}년 `;
-		if(r.ths > 0) str += `${r.ths}개월 `;
-		if(r.dys > 0) str += `${r.dys}일 `;
-		if(r.hrs > 0) str += `${r.hrs}시간 `;
-		if(r.mins > 0) str += `${r.mins}분 `;
+export const formatMinutes = minutes => {
+    const timeUnits = {
+        years: 525600,
+        months: 43800,
+        days: 1440,
+        hours: 60
+    };
+    const format = r => {
+        let str = '';
+        if(r.years > 0) str += `${r.years}년 `;
+        if(r.months > 0) str += `${r.months}개월 `;
+        if(r.days > 0) str += `${r.days}일 `;
+        if(r.hours > 0) str += `${r.hours}시간 `;
+        if(r.mins > 0) str += `${r.mins}분 `;
 
-		return str.trim();
-	}
+        return str.trim();
+    }
 	
+
+    let result = {};
+    for (const [key, value] of Object.entries(timeUnits)) {
+        result[key] = Math.floor(minutes / value);
+        minutes %= value;
+    }
+    result.mins = minutes;
 	
-	(function $(){
-		if(minutes-years >= 0) {
-			minutes -= years;
-			result.yrs += 1;
-			$();
-		} else (function $(){
-			if(minutes-months >= 0) {
-				minutes -= months;
-				result.ths += 1;
-				$();
-			} else (function $(){
-				if(minutes-days >= 0) {
-					minutes -= days;
-					result.dys += 1;
-					$();
-				} else (function $(){
-					if(minutes-hours >= 0) {
-						minutes -= hours;
-						result.hrs += 1;
-						$();
-					} else {
-						result.mins += minutes;
-					}
-				})();
-			})();
-		})();
-	})();
-	return format(result);
+    return format(result);
 };
 
 
