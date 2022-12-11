@@ -107,12 +107,12 @@ Router.post('/', async request => {
 							title: `:map: 현재 맵: \`${data.current.map}\``,
 							description: `> <t:${data.current.start}:R>에 시작되었습니다.`,
 							image: {"url": data.current.asset},
-							footer: {"text": `현재 "${gamemodeName}" 모드는 ${kIntl(data.current.DurationInMinutes)} 간격으로 맵이 변경됩니다`}
+							footer: {"text": `이 맵은 ${kIntl(data.current.DurationInMinutes)}동안 유지됩니다`}
 						}, {
 							title: `:map: 다음 맵: \`${data.next.map}\``,
 							description: `> <t:${data.next.start}:R>에 시작됩니다.`,
 							image: {"url": data.next.asset},
-							footer: {"text": `현재 "${gamemodeName}" 모드는 ${kIntl(data.next.DurationInMinutes)} 간격으로 맵이 변경됩니다`}
+							footer: {"text": `이 맵은 ${kIntl(data.next.DurationInMinutes)}동안 유지됩니다`}
 						}]
 					}
 				});
