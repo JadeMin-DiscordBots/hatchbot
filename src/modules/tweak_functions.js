@@ -87,7 +87,7 @@ export const kIntl = minutes => {
 	const format = r => {
 		let str = '';
 		if(r.yrs > 0) str += `${r.yrs}년 `;
-		if(r.ths > 0) str += `${r.ths}달 `;
+		if(r.ths > 0) str += `${r.ths}개월 `;
 		if(r.dys > 0) str += `${r.dys}일 `;
 		if(r.hrs > 0) str += `${r.hrs}시간 `;
 		if(r.mins > 0) str += `${r.mins}분 `;
