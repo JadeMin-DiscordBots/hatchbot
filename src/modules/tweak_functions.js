@@ -2,6 +2,22 @@ import { ALS_KO } from "./tweak_functions.json";
 
 
 
+export const setTweaks = w => {
+	w.Array.prototype.random = function(){
+		return this[Math.floor(Math.random() * this.length)];
+	};
+	w.String.prototype.shuffle = function(){
+		return this.sort(() => Math.random() - 0.5);
+	};
+	w.String.prototype.reverse = function(){
+		return this.split('').reverse().join('');
+	};
+};
+
+
+
+
+
 export class JsonResponse extends Response {
 	constructor(body, init) {
 		super(JSON.stringify(body), init ?? {
@@ -68,6 +84,15 @@ export class WebLogger {
 		return response.json();
 	};
 };
+
+
+
+
+/*export const processText = (text, callback) => {
+	text = text.split('');
+	callback(text);
+	return text.join('');
+};*/
 
 
 

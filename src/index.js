@@ -1,11 +1,12 @@
 import { Router as IttyRouter } from 'itty-router';
-import { JsonResponse, ALS_API, WebLogger, formatMinutes, escapeMarkdown } from "./modules/tweak_functions.js";
+import { JsonResponse, ALS_API, WebLogger, setTweaks, formatMinutes, escapeMarkdown } from "./modules/tweak_functions.js";
 import {
 	InteractionType, InteractionResponseType, InteractionResponseFlags,
 	MessageComponentTypes,
 	ButtonStyleTypes, TextStyleTypes,
 	verifyKey
 } from 'discord-interactions';
+setTweaks(self);
 const Router = IttyRouter();
 let Logger = null;
 let ALS = null;
@@ -112,6 +113,16 @@ Router.post('/', async request => {
 					}
 				});
 			};
+			case "금은가야 가야은금": {
+				Logger.log(`${JOSN.stringify(message.data, null, '\t')}`);
+				return new JsonResponse({
+					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+					data: {
+						content: `테스트중`,
+						flags: InteractionResponseFlags.EPHEMERAL,
+					}
+				});
+			}
 			default: {
 				Logger.log(`WARN: Unknown command name: ${message.data.name}`);
 				return new Response(`Unknown command name: ${message.data.name}`, {status: 400});
