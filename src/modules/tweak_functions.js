@@ -7,10 +7,14 @@ export const setTweaks = w => {
 		return this[Math.floor(Math.random() * this.length)];
 	};
 	w.String.prototype.shuffle = function(){
-		return this.sort(() => Math.random() - 0.5);
+		return this.split('').sort(() => Math.random() - 0.5).join('');
 	};
 	w.String.prototype.reverse = function(){
 		return this.split('').reverse().join('');
+	};
+
+	w.Array.prototype.getOption = function(name){
+		return this.find(o => o.name===name);
 	};
 };
 
@@ -129,4 +133,7 @@ export const formatMinutes = minutes => {
 
 
 
-export const escapeMarkdown = msg => msg.replace(/(`)/g, "\\$1");
+export const escapers = {
+	backtick: msg => msg.replace(/(`)/g, "\\$1"),
+	all: msg => msg.replace(/([`*_~<>@|])/g, "\\$1")
+};

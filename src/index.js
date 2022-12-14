@@ -1,5 +1,5 @@
 import { Router as IttyRouter } from 'itty-router';
-import { JsonResponse, ALS_API, WebLogger, setTweaks, formatMinutes, escapeMarkdown } from "./modules/tweak_functions.js";
+import { JsonResponse, ALS_API, WebLogger, setTweaks, formatMinutes, escapers } from "./modules/tweak_functions.js";
 import {
 	InteractionType, InteractionResponseType, InteractionResponseFlags,
 	MessageComponentTypes,
@@ -26,7 +26,7 @@ Router.post('/', async request => {
 	if(message.type == InteractionType.APPLICATION_MODAL_SUBMIT) {
 		switch(message.data.custom_id) {
 			case "popup_window": {
-				Logger.log(`<@${message.member.user.id}> | 빠빱\\_윈또우\\_뻐뜬 > \`\`${escapeMarkdown(message.data.components[0].components[0].value)}\`\``);
+				Logger.log(`<@${message.member.user.id}> | 빠빱\\_윈또우\\_뻐뜬 > \`\`${escapers.backtick(message.data.components[0].components[0].value)}\`\``);
 				return new JsonResponse({
 					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 					data: {
@@ -113,25 +113,46 @@ Router.post('/', async request => {
 					}
 				});
 			};
-			case "금은가야 가야은금": {
-				Logger.log(`${JOSN.stringify(message.data, null, '\t')}`);
-				return new JsonResponse({
-					type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-					data: {
-						content: `테스트중`,
-						flags: InteractionResponseFlags.EPHEMERAL,
-					}
-				});
+			case "금은가야": {
+				const msg = message.data.options.getOption("메시지").value;
+				const repeat = message.data.options.getOption("횟수")?.value ?? 1;
+
+				switch(message.data.options.getOption("기법").value) {
+					case "shuffle": {
+						return new JsonResponse({
+							type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+							data: {
+								content: escapers.all(msg.shuffle().repeat(repeat).slice(0, 1000))
+							}
+						});
+					};
+					case "reverse": {
+						return new JsonResponse({
+							type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+							data: {
+								content:  escapers.all(msg.reverse().repeat(repeat).slice(0, 1000))
+							}
+						});
+					};
+					default: {
+						return new JsonResponse({
+							type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+							data: {
+								content: `존재하지 않는 타입입니다.`
+							}
+						});
+					};
+				};
 			}
 			default: {
-				Logger.log(`WARN: Unknown command name: ${message.data.name}`);
+				Logger.log(`WARN: Unknown command name: \`${message.data.name}\``);
 				return new Response(`Unknown command name: ${message.data.name}`, {status: 400});
 			};
 		};
 	}
 	
 	// Handler for http requests
-	Logger.log(`WARN: Unknown message type: ${message.type}`);
+	Logger.log(`WARN: Unknown message type: \`${message.type}\``);
 	return new Response(`Unknown message type: ${message.type}`, {status: 400});
 });
 Router.get("/invite", async request => {
