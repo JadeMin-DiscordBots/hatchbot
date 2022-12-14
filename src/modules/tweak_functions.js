@@ -21,7 +21,6 @@ export const setTweaks = w => {
 
 
 
-
 export class JsonResponse extends Response {
 	constructor(body, init) {
 		super(JSON.stringify(body), init ?? {
