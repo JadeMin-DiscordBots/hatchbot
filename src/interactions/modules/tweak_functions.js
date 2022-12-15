@@ -21,17 +21,6 @@ export const setTweaks = w => {
 
 
 
-export class JsonResponse extends Response {
-	constructor(body, init) {
-		super(JSON.stringify(body), init ?? {
-			headers: {"Content-Type": "application/json;charset=UTF-8"}
-		});
-	};
-};
-
-
-
-
 export class ALS_API {
 	constructor(token) {
 		this.token = token;
@@ -87,15 +76,6 @@ export class WebLogger {
 		return response.json();
 	};
 };
-
-
-
-
-/*export const processText = (text, callback) => {
-	text = text.split('');
-	callback(text);
-	return text.join('');
-};*/
 
 
 

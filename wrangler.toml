@@ -1,6 +1,10 @@
+workers_dev = true
 name = "sayhi-bot"
-main = "src/index.js"
-compatibility_date = "2022-12-07"
+main = "./dist/index.mjs"
+compatibility_date = "2022-12-14"
 routes = [
 	{ zone_name="klartnet.ml", pattern="sayhi.discord.klartnet.ml", custom_domain=true }
 ]
+
+[build]
+command = "node build.js"
