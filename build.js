@@ -20,4 +20,4 @@ await build({
 	jsxFragment: "Fragment",
 	define
 });
-console.log("✅ 빌드 작업이 완료되었습니다!");
+console.log("✅ - 빌드 작업이 완료되었습니다!");
