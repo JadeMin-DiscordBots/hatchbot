@@ -32,7 +32,7 @@ export function 맵() {
 				<Embed
 					title={`:map: 다음 맵: \`${data.next.map}\``}
 					image={data.next.asset}
-					footer={`이 맵은 ${formatMinutes(data.next.DurationInMinutes)}동안 유지됩니다`}
+					footer={`이 맵은 ${formatMinutes(data.next.DurationInMinutes)} 동안 유지됩니다`}
 				>
 					{`> <t:${data.next.start}:R>에 시작됩니다.`}
 				</Embed>
