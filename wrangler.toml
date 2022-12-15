@@ -1,4 +1,4 @@
-workers_dev = true
+workers_dev = false
 name = "sayhi-bot"
 main = "./dist/index.mjs"
 compatibility_date = "2022-12-14"
@@ -7,4 +7,10 @@ routes = [
 ]
 
 [build]
-command = "node build.js"
+command = "node scripts/build.js"
+
+[miniflare]
+kv_persist = true
+cache_persist = true
+durable_objects_persist = true
+global_async_io = true # Required by Slshx

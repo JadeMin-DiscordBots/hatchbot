@@ -5,7 +5,9 @@
 	"type": "module",
 	"module": "dist/index.mjs",
 	"scripts": {
-		"build": "node --no-warnings --experimental-vm-modules build.js"
+		"deploy": "wrangler publish",
+		"build": "node --no-warnings --experimental-vm-modules scripts/build.js",
+		"dev:deploy": "node --no-warnings --experimental-vm-modules scripts/deploy.js"
 	},
 	"dependencies": {
 		"slshx": "^0.3.0"
