@@ -20,7 +20,6 @@ export function 맵() {
 		const ALS = new ALS_API(env.ALS_TOKEN);
 		const als = await ALS.send("maprotation", {version: 2});
 		const data = als[gamemode ?? "battle_royale"];
-
 		return (
 			<Message>
 				<Embed
