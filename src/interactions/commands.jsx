@@ -6,7 +6,7 @@ import {
 } from 'slshx';
 import {
 	ALS_API, WebLogger,
-	setTweaks, formatMinutes, escapers
+	setTweaks, formatMinutes, escapers, randomInt
 } from "./modules/tweak_functions.js";
 setTweaks(self);
 
@@ -85,4 +85,15 @@ export function 금은가야() {
 			return ()=> <Message>{type}은(는) 존재하지 않는 타입입니다.</Message>
 		};
 	};
+};
+export function 도움말() {
+	return ()=> (
+		<Message>
+			<Embed
+				title="도움말 목록을 불러오는 중입니다..."
+			>
+				{`예상 완료 시간 : \`${formatMinutes(randomInt(96854851, 6857485141))}\``}
+			</Embed>
+		</Message>
+	);
 };
