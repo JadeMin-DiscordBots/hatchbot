@@ -5,8 +5,8 @@
 	"type": "module",
 	"module": "dist/index.mjs",
 	"scripts": {
-		"deploy": "wrangler publish",
 		"build": "node --no-warnings --experimental-vm-modules scripts/build.js",
+		"deploy": "wrangler publish",
 		"dev:deploy": "node --no-warnings --experimental-vm-modules scripts/deploy.js"
 	},
 	"dependencies": {
