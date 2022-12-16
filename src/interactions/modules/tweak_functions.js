@@ -63,10 +63,11 @@ export class NEIS_API {
 		const response = await fetch(url);
 		const data = await response.json();
 
+		if(data?.RESULT) console.error(data?.RESULT);
 		return {
 			url,
-			response: data.hisTimetable[0].head[1].RESULT,
-			timetables: data.hisTimetable[1].row
+			error: { ...data?.RESULT },
+			timetables: Object.values(data)?.[0]?.[1]?.row
 		};
 	};
 };
