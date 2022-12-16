@@ -56,9 +56,9 @@ export function 시간표() {
 				<Embed
 					title={
 						props.type === "normal"?
-							`:calendar_spiral: ${props.data.timetables[0].SCHUL_NM} - ${props.data.timetables[0].GRADE}학년 ${props.data.timetables[0].CLASS_NM}반 시간표`
+							`:calendar_spiral: ${props.data.timetables[0].GRADE}학년 ${props.data.timetables[0].CLASS_NM}반 시간표`
 							:
-							`:calendar_spiral: ${props.data.timetables[0].SCHUL_NM} - 특수학급 시간표`
+							`:calendar_spiral: 특수학급 시간표`
 					}
 					footer={`${date} 시간표`}
 				>
