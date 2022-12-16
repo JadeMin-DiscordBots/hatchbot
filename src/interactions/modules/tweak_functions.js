@@ -58,8 +58,8 @@ export class NEIS_API {
 	constructor(token){
 		this.token = token;
 	};
-	async send(query={}){
-		const url = `https://open.neis.go.kr/hub/hisTimetable?KEY=${this.token}&${new URLSearchParams(query)}&Type=json`;
+	async send(type, query={}){
+		const url = `https://open.neis.go.kr/hub/${type}?KEY=${this.token}&${new URLSearchParams(query)}&Type=json`;
 		const response = await fetch(url);
 		const data = await response.json();
 
