@@ -55,7 +55,7 @@ export function 시간표() {
 		}
 		yield;
 		const NIES = new NEIS_API("4243226e82884f239ce39a5d454d5c42");
-		const data = await NIES.send({
+		const data = await NIES.send("hisTimetable", {
 			ATPT_OFCDC_SC_CODE: "J10" /*sch.region.toUpperCase()*/,
 			SD_SCHUL_CODE: "7530474" /*sch.code*/,
 			GRADE: sch.grade,
