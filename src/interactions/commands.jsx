@@ -150,13 +150,13 @@ export function 금은가야() {
 
 	switch(type){
 		case "shuffle": {
-			return ()=> <Message>{escapers.all(msg.repeat(repeat).shuffle().slice(0, 1999))}</Message>
+			return ()=> <Message>{escapers.all(msg.repeat(repeat).shuffle().slice(0, 1999))}</Message>;
 		};
 		case "reverse": {
-			return ()=> <Message>{escapers.all(msg.repeat(repeat).reverse().slice(0, 1999))}</Message>
+			return ()=> <Message>{escapers.all(msg.repeat(repeat).reverse().slice(0, 1999))}</Message>;
 		};
 		default: {
-			return ()=> <Message>{type}은(는) 존재하지 않는 타입입니다.</Message>
+			return ()=> <Message>{type}은(는) 존재하지 않는 타입입니다.</Message>;
 		};
 	};
 };
