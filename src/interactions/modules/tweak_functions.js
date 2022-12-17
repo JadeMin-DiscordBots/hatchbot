@@ -117,10 +117,10 @@ export const formatMinutes = minutes => {
 	
 
     let result = {};
-    for (const [key, value] of Object.entries(timeUnits)) {
+    for(const [key, value] of Object.entries(timeUnits)) {
         result[key] = Math.floor(minutes / value);
         minutes %= value;
-    }
+    };
     result.mins = minutes;
 	
     return format(result);
