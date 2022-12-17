@@ -42,13 +42,16 @@ export function 빠빱윈또우뻐뜬() {
 	);
 };
 export function 시간표() {
-	const date = new Date().toISOString().replace(/T.*/, '');
+	const date = Intl.DateTimeFormat('ko-KR', {
+		dateStyle: 'long',
+		timeZone: "Asia/Seoul",
+	}).format(new Date());
 	const options = {
 		"ATPT_OFCDC_SC_CODE": "J10" /*useString("지역코드")*/,
 		"SD_SCHUL_CODE": "7530474" /*useInteger("학교코드")*/,
 		"GRADE": useInteger("학년"),
 		"CLASS_NM": useInteger("반"),
-		"ALL_TI_YMD": date.replace(/-/g, '')
+		"ALL_TI_YMD": date.replace(/[년월일]\s?/g, '')
 	};
 	const Timetable = props => {
 		if(!Object.keys(props.data.error).length) {

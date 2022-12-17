@@ -4,4 +4,3 @@ dist
 node_modules
 env.json
 env.jsonc
-scripts
