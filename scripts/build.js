@@ -4,7 +4,7 @@ import env from "../env.json" assert {type: 'json'};
 const define = {
 	"APPLICATION_ID": JSON.stringify(env["APPLICATION_ID"]),
 	"PUBLIC_KEY": JSON.stringify(env["PUBLIC_KEY"]),
-	"BOT_TOKEN": JSON.stringify(env["BOT_TOKEN"]),
+	//"BOT_TOKEN": JSON.stringify(env["BOT_TOKEN"]),
 	"globalThis.MINIFLARE": "false"
 };
 await build({
