@@ -65,13 +65,11 @@ export function 시간표() {
 					}
 					footer={`${date} 시간표`}
 				>
-					{
-						props.data.timetables.map((time, index) => {
-							return <Field name={`${index+1}교시`}>
-								{time.ITRT_CNTNT}
-							</Field>
-						})
-					}
+					{props.data.timetables.map((time, index) => {
+						return <Field name={`${index+1}교시`}>
+							{time.ITRT_CNTNT}
+						</Field>
+					})}
 				</Embed>
 			);
 		} else {
