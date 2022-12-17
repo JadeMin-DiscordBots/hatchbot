@@ -58,7 +58,7 @@ export function 시간표() {
 			return (
 				<Embed
 					title={
-						props.type === "normal"?
+						props.type === 'normal'?
 							`:calendar_spiral: ${props.data.timetables[0].GRADE}학년 ${props.data.timetables[0].CLASS_NM}반 시간표`
 							:
 							`:calendar_spiral: 특수학급 시간표`
@@ -77,7 +77,7 @@ export function 시간표() {
 				<Embed
 					title={
 						props.data.error.CODE === "INFO-200"?
-							props.type === "normal"?
+							props.type === 'normal'?
 								":calendar_spiral: 오늘은 원반 시간표가 없습니다."
 								:
 								":calendar_spiral: 오늘은 특수학급 시간표가 없습니다."
