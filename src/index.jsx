@@ -3,9 +3,9 @@ import * as commands from "./interactions/commands";
 
 
 const handler = createHandler({
-	applicationId: APPLICATION_ID,
-	applicationPublicKey: PUBLIC_KEY,
-	//applicationSecret: BOT_TOKEN,
+	applicationId: ESBUILD.APPLICATION_ID,
+	applicationPublicKey: ESBUILD.PUBLIC_KEY,
+	//applicationSecret: ESBUILD.BOT_TOKEN,
 	commands,
 });
 //export default {fetch: handler};

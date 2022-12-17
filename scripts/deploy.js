@@ -8,9 +8,9 @@ const rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
 });
-const question = `⚠️ 정말 글로벌 배포를 하시겠습니까?
-이 작업은 봇이 참여한 모든 서버에 적용될 것입니다.
-적용하는데 최대 1시간이 걸릴 수 있습니다.
+const question = `⚠️ 정말 글로벌 배포를 진행하시겠습니까?
+이 작업은 봇이 참여한 모든 서버에 적용되며
+참여한 서버 수에 따라 업데이트까지 최대 1시간까지 소요될 수 있습니다.
 
 (y/n) `;
 const answer = await new Promise((resolve) => {

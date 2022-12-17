@@ -7,7 +7,7 @@ routes = [
 ]
 
 [build]
-command = "node scripts/build.js"
+command = "node build.js"
 
 [miniflare]
 kv_persist = true
