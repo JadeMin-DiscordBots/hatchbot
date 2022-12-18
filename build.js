@@ -10,15 +10,19 @@ const define = {
 };
 await build({
 	entryPoints: ["src/index.jsx"],
-	outExtension: {".js": ".mjs"},
 	outdir: "dist",
+	outExtension: {".js": ".mjs"},
+
 	target: "esnext",
 	format: "esm",
+	
 	bundle: true,
+	minify: true,
 	sourcemap: true,
-	minifySyntax: true,
+
 	jsxFactory: "createElement",
 	jsxFragment: "Fragment",
+
 	define
 });
 console.log("✅ - 빌드 작업이 완료되었습니다!");

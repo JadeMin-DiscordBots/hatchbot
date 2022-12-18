@@ -1,13 +1,13 @@
 import {
 	createElement,
-	useString, useNumber, useInteger, useDescription,
+	useDescription, useString, useNumber, useInteger,
 	Message, Embed, Field, Modal, Button, Input, Row,
 	useButton, useModal, useInput,
 } from 'slshx';
 import {
 	ALS_API, NEIS_API, WebLogger,
 	setTweaks, formatMinutes, escapers, randomInt
-} from "./modules/tweak_functions.js";
+} from "./modules/tweak_functions";
 setTweaks(self);
 
 
@@ -35,7 +35,6 @@ export function 빠빱윈또우뻐뜬() {
 		<Message>
 			빠빱\_윈또우\_뻐뜬
 			<Row>
-				<Button id={popupWindowButton_id} primary>popup_window_button</Button>
 				<Button id={popupWindowButton_id} primary>popup_window_button</Button>
 			</Row>
 		</Message>
@@ -92,7 +91,7 @@ export function 시간표() {
 		}
 	};
 
-	return async function*(interaction, env) {
+	return async function*(interaction) {
 		if(!["901544586990743632", "868813672154288128"].includes(interaction?.guild_id)) {
 			return <Message>이 명령어는 현재 미공개 상태이며 개발자 서버에서만 이용할 수 있습니다.</Message>;
 		}
@@ -159,7 +158,7 @@ export function 금은가야() {
 	};
 };
 export function 도움말() {
-	return ()=> (
+	return () => (
 		<Message>
 			<Embed
 				title="도움말 목록을 불러오는 중입니다..."

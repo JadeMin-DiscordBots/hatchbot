@@ -1,23 +1,32 @@
 import { createHandler, authorizeResponse } from 'slshx';
 import * as commands from "./interactions/commands";
-
-
-const handler = createHandler({
+const options = {
 	applicationId: ESBUILD.APPLICATION_ID,
 	applicationPublicKey: ESBUILD.PUBLIC_KEY,
-	//applicationSecret: ESBUILD.BOT_TOKEN,
 	commands,
-});
+};
+options["applicationSecret"] &&= ESBUILD.BOT_TOKEN;
+
+
+const Handler = {
+	interaction: createHandler(options),
+	authorizeResponse: authorizeResponse
+};
 //export default {fetch: handler};
 export default {
 	async fetch(request, env, ctx) {
 		const { pathname } = new URL(request.url);
-		if(pathname === "/interactions") {
-			return handler(request, env, ctx);
-		} else if(pathname === "/invite") {
-			return authorizeResponse(request, env, ctx);
-		} else {
-			return new Response("No Bitches lol", {status: 404});
-		}
+
+		switch(pathname) {
+			case "/interactions": {
+				return Handler.interaction(request, env, ctx);
+			};
+			case "/invite": {
+				return Handler.authorizeResponse(request, env, ctx);
+			};
+			default: {
+				return new Response("No Bitches lol", {status: 404});
+			};
+		};
 	}
-}
+};
