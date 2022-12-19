@@ -1,6 +1,7 @@
 import {
 	createElement,
-	useDescription, useString, useNumber, useInteger,
+	useDescription,
+	useString, useNumber, useInteger, useBoolean,
 	Fragment, Message, Embed, Field, Modal, Button, Input, Row,
 	useButton, useModal, useInput,
 } from 'slshx';
@@ -9,7 +10,8 @@ import {
 	ALS_API, NEIS_API,
 	setTweaks,
 	formatMinutes, escapers,
-} from "./modules/tweak_functions";
+} from "../modules/tweak_functions";
+import Meal from "./callback/components/Meal";
 
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);
@@ -50,6 +52,9 @@ export const 빠빱윈또우뻐뜬 = () => {
 	);
 };
 export const 급식표 = () => {
+	const isNtrMode = useBoolean("영양정보");
+
+
 	const nowDate = Intl.DateTimeFormat('ko-KR', {
 		dateStyle: 'long',
 		timeZone: "Asia/Seoul",
@@ -59,7 +64,6 @@ export const 급식표 = () => {
 		"SD_SCHUL_CODE": "7530474" /*useInteger("학교코드")*/,
 		"MLSV_YMD": nowDate.replace(/[년월일]\s?/g, '') /*useString("날짜")*/,
 	};
-
 
 	return async function*(interaction) {
 		if(!["901544586990743632", "868813672154288128"].includes(interaction?.guild_id)) {
@@ -85,30 +89,10 @@ export const 급식표 = () => {
 						</Embed>
 						:
 						<>
-							<Embed
-								title="영양 정보"
-								footer={`총 ${api.data[0].CAL_INFO}`}
-							>
-								{`> 총 ${api.data[0].CAL_INFO}`}
-								{
-									api.data[0].NTR_INFO.split(/\<br\/?\>/).map(ntr=> {
-										const [key, value] = ntr.split(" : ");
-										return (
-											<Field name={key} inline>
-												{value}
-											</Field>
-										);
-									})
-								}
-							</Embed>
-							<Embed
-								title="오늘의 급식표"
-								footer={api.data[0].MMEAL_SC_NM}
-							>
-								{
-									api.data[0].DDISH_NM.replace(/(\.|\s{2})|\([0-9가-힣/.]+\)/g, '').split(/\<br\/?\>/).join('\n')
-								}
-							</Embed>
+							{isNtrMode ??
+								<Meal.NutritionEmbed data={api.data[0]}/>
+							}
+							<Meal.MenuEmbed data={api.data[0]}/>
 						</>
 				}
 			</Message>
