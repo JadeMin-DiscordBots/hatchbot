@@ -1,23 +1,29 @@
 import { build } from 'esbuild';
-import env from "./env.json" assert {type: 'json'};
+import env from "./secrets.json" assert {type: 'json'};
 
 const define = {
 	"globalThis.MINIFLARE": "false",
-	"ESBUILD.APPLICATION_ID": JSON.stringify(env["APPLICATION_ID"]),
-	"ESBUILD.PUBLIC_KEY": JSON.stringify(env["PUBLIC_KEY"]),
-	// _ Not recommended for production _
-	"ESBUILD.BOT_TOKEN": JSON.stringify(env["BOT_TOKEN"])
+
+	"env.APPLICATION_ID": JSON.stringify(env["APPLICATION_ID"]),
+	"env.PUBLIC_KEY": JSON.stringify(env["PUBLIC_KEY"]),
+	"env.BOT_TOKEN": JSON.stringify(env["BOT_TOKEN"]),
+	
+	"env.LOGHOOK_ID": JSON.stringify(env["LOGHOOK_ID"]),
+	"env.LOGHOOK_TOKEN": JSON.stringify(env["LOGHOOK_TOKEN"]),
+
+	"env.ALS_TOKEN": JSON.stringify(env["ALS_TOKEN"]),
+	"env.NEIS_TOKEN": JSON.stringify(env["NEIS_TOKEN"]),
 };
 await build({
 	entryPoints: ["src/index.jsx"],
-	outdir: "dist",
+	outdir: "dist/",
 	outExtension: {".js": ".mjs"},
 
 	target: "esnext",
 	format: "esm",
 	
 	bundle: true,
-	minify: true,
+	minifySyntax: true,
 	sourcemap: true,
 
 	jsxFactory: "createElement",

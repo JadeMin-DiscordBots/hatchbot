@@ -2,20 +2,19 @@ import { ALS_KO } from "./tweak_functions.json";
 
 
 
-export const setTweaks = w => {
-	w.Array.prototype.random = function(){
+export const setTweaks = win => {
+	win.Array.prototype.random = function(){
 		return this[Math.floor(Math.random() * this.length)];
 	};
-	w.String.prototype.shuffle = function(){
+	win.String.prototype.shuffle = function(){
 		return this.split('').sort(() => Math.random() - 0.5).join('');
 	};
-	w.String.prototype.reverse = function(){
+	win.String.prototype.reverse = function(){
 		return this.split('').reverse().join('');
 	};
 
-	w.Array.prototype.getOption = function(name){
-		return this.find(o => o.name===name);
-	};
+	win.sleep = (ms) => new Promise(resolve=> setTimeout(resolve, ms));
+	win.randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 
@@ -47,7 +46,7 @@ export class ALS_API {
 		const url = `https://api.mozambiquehe.re/${type}?${new URLSearchParams(query)}`;
 		const response = await fetch(url, {
 			method: 'GET',
-			headers: {"Authorization": this.token}
+			headers: {'Authorization': this.token}
 		});
 
 		return this.lang(type, await response.json(), query);
@@ -67,7 +66,7 @@ export class NEIS_API {
 		return {
 			url,
 			error: { ...data?.RESULT },
-			timetables: Object.values(data)?.[0]?.[1]?.row
+			data: Object.values(data)?.[0]?.[1]?.row
 		};
 	};
 };
@@ -80,17 +79,24 @@ export class WebLogger {
 		this.id = id;
 		this.token = token;
 	};
-	async log(message) {
-		console.log(message.replace(/```([a-zA-Z]*)?/gi, '\n$1').trim());
+	async log(options) {
+		let msg = options;
+		if(options.constructor === Object) {
+			msg = options.code? 
+				options.message.replace(/\$code/i, `\`\`\`${options.code.lang}\n${options.code.context}\`\`\``)
+				:
+				options.message;
+		}
+
+		console.log(msg.replace(/\\/g, ''));
 		const response = await fetch(`https://discord.com/api/webhooks/${this.id}/${this.token}`, {
 			method: 'POST',
-			headers: {"Content-Type": "application/json;charset=UTF-8"},
+			headers: {'Content-Type': "application/json;charset=UTF-8"},
 			body: JSON.stringify({
-				content: message
+				content: msg
 			})
 		});
-
-		return response.json();
+		return response;
 	};
 };
 
@@ -113,7 +119,7 @@ export const formatMinutes = minutes => {
         if(r.mins > 0) str += `${r.mins}분 `;
 
         return str.trim();
-    }
+    };
 	
 
     let result = {};
@@ -133,9 +139,3 @@ export const escapers = {
 	backtick: msg => msg.replace(/(`)/g, "\\$1"),
 	all: msg => msg.replace(/([`*_~<>@|])/g, "\\$1")
 };
-
-
-
-
-export const sleep = ms => new Promise(resolve=> setTimeout(resolve, ms));
-export const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
