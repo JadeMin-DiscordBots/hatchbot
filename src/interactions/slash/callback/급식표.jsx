@@ -10,14 +10,17 @@ import {
 	ALS_API, NEIS_API,
 	setTweaks,
 	formatMinutes, escapers,
-} from "../modules/tweak_functions";
-import Meal from "./callback/components/Meal";
+} from "./modules/tweak_functions";
+import Meal from "./components/Meal";
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);
 
 
 export default function 급식표() {
-	const isNtrMode = useBoolean("영양정보");
+	useDescription("급식표를 확인할까요 말까요");
+	const isNtrMode = useBoolean("영양정보", "영양 정보를 표시할지 선택합니다", {
+		required: false
+	});
 
 
 	const nowDate = Intl.DateTimeFormat('ko-KR', {
@@ -54,10 +57,17 @@ export default function 급식표() {
 						</Embed>
 						:
 						<>
-							{isNtrMode ??
-								<Meal.NutritionEmbed data={api.data[0]}/>
+							<Meal.MenuEmbed
+								title="오늘의 급식"
+								footer={`${nowDate}자`}
+								data={api.data[0]}
+							/>
+							{isNtrMode?
+								<Meal.NutritionEmbed
+									title="영양 정보"
+									data={api.data[0]}
+								/> : ''
 							}
-							<Meal.MenuEmbed data={api.data[0]}/>
 						</>
 				}
 			</Message>

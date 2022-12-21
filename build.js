@@ -15,7 +15,7 @@ const define = {
 	"env.NEIS_TOKEN": JSON.stringify(env["NEIS_TOKEN"]),
 };
 await build({
-	entryPoints: ["src/index.jsx"],
+	entryPoints: ["src/server.js"],
 	outdir: "dist/",
 	outExtension: {".js": ".mjs"},
 

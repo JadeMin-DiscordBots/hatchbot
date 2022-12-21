@@ -8,11 +8,12 @@ import {
 import {
 	WebLogger,
 	escapers,
-} from ".../modules/tweak_functions";
+} from "./modules/tweak_functions";
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
 
 export default function 빠빱윈또우뻐뜬() {
+	useDescription("popup_window_button");
 	const [popupPassword_id, popupPassword_value] = useInput();
 	const popupWindow_id = useModal(interaction => {
 		Logger.log(`<@${interaction.member.user.id}> | 빠빱\\_윈또우\\_뻐뜬 > \`\`${escapers.backtick(popupPassword_value)}\`\``);

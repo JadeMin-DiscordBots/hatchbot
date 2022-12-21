@@ -7,7 +7,8 @@
 	"scripts": {
 		"build": "node --no-warnings --experimental-vm-modules build.js",
 		"deploy": "wrangler publish",
-		"dev:deploy": "node --no-warnings --experimental-vm-modules scripts/deploy.js"
+		"dev": "wrangler dev",
+		"unstable:deploy": "node --no-warnings --experimental-vm-modules ./scripts/deploy.js"
 	},
 	"dependencies": {
 		"slshx": "^0.3.0"

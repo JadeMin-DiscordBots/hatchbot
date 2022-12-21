@@ -1,13 +1,13 @@
 workers_dev = false
 name = "sayhi-bot"
-main = "./dist/index.mjs"
+main = "./dist/server.mjs"
 compatibility_date = "2022-12-14"
 routes = [
 	{ zone_name="klartnet.ml", pattern="sayhi.discord.klartnet.ml", custom_domain=true }
 ]
 
 [build]
-command = "node --no-warnings build.js"
+command = "node --no-warnings ./build.js"
 
 [miniflare]
 kv_persist = true

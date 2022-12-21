@@ -8,12 +8,21 @@ import {
 import {
 	WebLogger,
 	NEIS_API,
-} from "../modules/tweak_functions";
+} from "./modules/tweak_functions";
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);
 
 
 export default function 시간표() {
+	useDescription("시간표를 확인합니다.");
+	const GRADE = useInteger("학년", "학년을 입력해주세요.", {
+		required: true
+	});
+	const CLASS_NM = useInteger("반", "반을 입력해주세요.", {
+		required: true
+	});
+
+
 	const nowDate = Intl.DateTimeFormat('ko-KR', {
 		dateStyle: 'long',
 		timeZone: "Asia/Seoul",
@@ -21,11 +30,10 @@ export default function 시간표() {
 	const options = {
 		"ATPT_OFCDC_SC_CODE": "J10" /*useString("지역코드")*/,
 		"SD_SCHUL_CODE": "7530474" /*useInteger("학교코드")*/,
-		"GRADE": useInteger("학년"),
-		"CLASS_NM": useInteger("반"),
+		"GRADE": GRADE,
+		"CLASS_NM": CLASS_NM,
 		"ALL_TI_YMD": nowDate.replace(/[년월일]\s?/g, '')
 	};
-
 
 	return async function*(interaction) {
 		if(!["901544586990743632", "868813672154288128"].includes(interaction?.guild_id)) {
@@ -47,7 +55,7 @@ export default function 시간표() {
 							:
 							`:calendar_spiral: ${api.data[0].GRADE}학년 ${api.data[0].CLASS_NM}반 시간표`
 					}
-					footer={nowDate}
+					footer={`${nowDate}자`}
 				>
 					{
 						isError?

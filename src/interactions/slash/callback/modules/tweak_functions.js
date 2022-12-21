@@ -1,4 +1,20 @@
-import { ALS_KO } from "./tweak_functions.json";
+import DICTS from "./tweak_functions.json";
+
+Response.prototype.waitForBody = async function(){
+	let result = {text: await this.clone().text()};
+	try {
+		result['json'] = await this.clone().json();
+	} catch(error){
+		if(error?.constructor === SyntaxError) {
+			result['json'] = null;
+		} else {
+			throw new error.constructor(error);
+		}
+	}
+
+	return result;
+};
+
 
 
 
@@ -23,22 +39,22 @@ export const setTweaks = win => {
 export class ALS_API {
 	constructor(token) {
 		this.token = token;
-		this._CONFIG = ALS_KO;
+		this._DICTS = DICTS;
 	};
-	lang(type, data) {
+	lang(type, message) {
 		switch(type) {
 			case 'maprotation': {
-				const ko = name=> ALS_KO[name] || name;
+				const ko = name=> DICTS[name] || name;
 
-				for(const i in data) {
-					const gamemode = data[i];
+				for(const i in message) {
+					const gamemode = message[i];
 					gamemode.current.map = ko(gamemode.current.map);
 					gamemode.next.map = ko(gamemode.next.map);
 				};
-				return data;
+				return message;
 			};
 			case 'gamemode': {
-				return ALS_KO[data] || data;
+				return DICTS[message] || message;
 			};
 		};
 	};
@@ -79,24 +95,43 @@ export class WebLogger {
 		this.id = id;
 		this.token = token;
 	};
-	async log(options) {
-		let msg = options;
-		if(options.constructor === Object) {
-			msg = options.code? 
-				options.message.replace(/\$code/i, `\`\`\`${options.code.lang}\n${options.code.context}\`\`\``)
-				:
-				options.message;
-		}
-
-		console.log(msg.replace(/\\/g, ''));
-		const response = await fetch(`https://discord.com/api/webhooks/${this.id}/${this.token}`, {
+	#toStringForce(text) {
+		if(text?.constructor === Object) return JSON.stringify(text, null, '\t');
+		return text;
+	};
+	async #sendLoghook(body, options) {
+		const loghookUrl = `https://discord.com/api/webhooks/${this.id}/${this.token}`;
+		const response = await fetch(loghookUrl, {
 			method: 'POST',
 			headers: {'Content-Type': "application/json;charset=UTF-8"},
-			body: JSON.stringify({
-				content: msg
-			})
+			body: JSON.stringify(body),
+			...options
 		});
-		return response;
+
+		return response.waitForBody();
+	};
+	async log(message, options) {
+		if(message?.constructor !== Object && options?.constructor === Object) {
+			message = message.replace(/\$code/i, `\`\`\`${options.language}\n${options.code}\`\`\``).replace(/\\\\/g, '\\');
+		}
+
+
+		console.log(message);
+		const stringifiedMsg = this.#toStringForce(message);
+		let loghookResponse = null;
+		if(stringifiedMsg.length > 2000) {
+			const warnMsg = "\n로그 메시지가 2000자를 초과하여 일부 내용이 누락되었습니다.\n[CloudFlare Workers](https://dash.cloudflare.com/?to=/:account/workers/overview)에서 전체 로그를 확인하세요.";
+			loghookResponse = await this.#sendLoghook({
+				content: `\`\`\`${stringifiedMsg.substring(0, 1994-warnMsg.length)}\`\`\`${warnMsg}`,
+			});
+		} else {
+			loghookResponse = await this.#sendLoghook({
+				content: `\`\`\`json\n${stringifiedMsg.substring(0, 1994)}\`\`\``
+			});
+		}
+
+		console.debug(loghookResponse);
+		return loghookResponse;
 	};
 };
 
