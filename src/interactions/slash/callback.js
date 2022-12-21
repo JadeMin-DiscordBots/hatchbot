@@ -1,10 +1,10 @@
-import 빠빱윈또우뻐뜬 from "./callback/빠빱윈또우뻐뜬";
-import 급식표 from "./callback/급식표";
-import 시간표 from "./callback/시간표";
-import 맵 from "./callback/맵";
-import 금은가야 from "./callback/금은가야";
-import 도움말 from "./callback/도움말";
-import 테스트 from "./callback/테스트";
+import 빠빱윈또우뻐뜬 from "./callbacks/빠빱윈또우뻐뜬";
+import 급식표 from "./callbacks/급식표";
+import 시간표 from "./callbacks/시간표";
+import 맵 from "./callbacks/맵";
+import 금은가야 from "./callbacks/금은가야";
+import 도움말 from "./callbacks/도움말";
+import 테스트 from "./callbacks/테스트";
 
 
 export default {
