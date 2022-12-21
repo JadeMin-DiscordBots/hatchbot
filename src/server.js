@@ -3,8 +3,8 @@ import {
 	deployCommands
 } from 'slshx';
 import commands from "./interactions/slash/callback";
-import userCommands from "./interactions/user/callback";
-import messageCommands from "./interactions/message/callback";
+import userCommands from "./interactions/ctxm/messages/callback";
+import messageCommands from "./interactions/ctxm/users/callback";
 const options = {
 	applicationId: env.APPLICATION_ID,
 	applicationPublicKey: env.PUBLIC_KEY,
