@@ -13,7 +13,8 @@ const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 setTweaks(self);
 
 
-export default function 금은가야() {
+
+export default function() {
 	useDescription("금은가야 암호화 기법을 사용하여 메시지를 변환합니다.");
 	const type = useString("기법", "암호화 기법을 선택하세요", {
 		required: true,
@@ -28,7 +29,7 @@ export default function 금은가야() {
 	const msg = useString("메시지", "암호화할 메시지를 입력하세요", {
 		required: true
 	});
-	const repeat = useNumber("반복", "반복 횟수를 입력하세요", {
+	const repeat = useInteger("반복", "반복 횟수를 입력하세요", {
 		required: false,
 		min: 1, max: 100
 	}) ?? 1;

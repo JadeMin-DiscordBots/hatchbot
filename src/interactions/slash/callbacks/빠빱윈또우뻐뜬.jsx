@@ -7,12 +7,13 @@ import {
 } from 'slshx';
 import {
 	WebLogger,
-	escapers,
+	setTweaks, escapers,
 } from "./modules/tweak_functions";
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
 
-export default function 빠빱윈또우뻐뜬() {
+
+export default function() {
 	useDescription("popup_window_button");
 	const [popupPassword_id, popupPassword_value] = useInput();
 	const popupWindow_id = useModal(interaction => {

@@ -23,5 +23,5 @@ const response = await localWorker.dispatchFetch(`http://localhost:8787/deploy?$
 if(response.status === 200) console.log("✅ - 성공적으로 명령어가 배포되었습니다!");
 else {
 	const error = await response.text();
-	console.log(`❌ - 명령어 배포용 로컬 서버가 오류를 반환했습니다: ${error}`);
+	console.log(`❌ - 명령어 배포용 서버 빌드가 ErrorResponse를 반환했습니다: ${error}`);
 }

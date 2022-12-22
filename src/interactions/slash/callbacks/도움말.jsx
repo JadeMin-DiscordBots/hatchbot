@@ -8,14 +8,23 @@ import {
 import {
 	WebLogger,
 	setTweaks,
-	formatMinutes, escapers,
+	formatMinutes
 } from "./modules/tweak_functions";
-const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 setTweaks(self);
 
 
-export default function 도움말() {
+
+export default function() {
 	useDescription("사용 가능한 모든 명령어와 사용법을 확인합니다.");
+	const cmdName = useString("명령어", "원하는 명령어의 이름을 입력합니다.", {
+		required: false,
+		choices: [{
+			name: "응 원이야",
+			value: "fighting"
+		}]
+	});
+	
+
 	return () => (
 		<Message>
 			<Embed title="도움말 목록을 불러오는 중입니다...">

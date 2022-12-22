@@ -3,11 +3,11 @@
 	"name": "sayhi-bot",
 	"version": "0.0.0",
 	"type": "module",
-	"module": "dist/index.mjs",
+	"module": "./dist/index.mjs",
 	"scripts": {
 		"log": "wrangler tail",
 
-		"publish": "wrangler publish",
+		"publish": "wrangler publish && echo ✅ - Cloudflare Workers에 업로드되었습니다!",
 		"publish:log": "npm run publish && npm run log",
 		
 		"deploy": "node --no-warnings --experimental-vm-modules ./scripts/deploy.js && npm run publish",
@@ -20,7 +20,7 @@
 		"slshx": "^0.3.0"
 	},
 	"devDependencies": {
-		"esbuild": "^0.16.7",
+		"esbuild": "^0.16.10",
 		"miniflare": "^2.11.0",
 		"wrangler": "^2.6.2"
 	}

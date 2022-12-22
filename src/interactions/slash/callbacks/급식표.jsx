@@ -10,13 +10,14 @@ import {
 	NEIS_API,
 	setTweaks
 } from "./modules/tweak_functions";
-import Meal from "./components/Meal";
+import Meal from "./components/급식";
 setTweaks(self);
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);
 
 
-export default function 급식표() {
+
+export default function() {
 	useDescription("급식표를 확인합니다.");
 	const days = useString("날짜", "날짜를 입력해주세요.", {
 		required: false,
@@ -77,13 +78,12 @@ export default function 급식표() {
 									:
 									"데이터를 불러오는 중 오류가 발생했습니다."
 							}
-						>
-							{api.error.MESSAGE}
-						</Embed>
+							footer={api.error.MESSAGE}
+						></Embed>
 						:
 						<>
 							<Meal.MenuEmbed
-								title="오늘의 급식"
+								title=":bento: 오늘의 급식"
 								footer={`${nowDate}자`}
 								data={api.data[0]}
 							/>

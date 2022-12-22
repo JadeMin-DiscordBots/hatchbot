@@ -40,6 +40,8 @@ export const setTweaks = win => {
 		return date;
 	};
 
+	win.Response.prototype.waitForBody = Response.prototype.waitForBody;
+
 
 	win.sleep = (ms) => new Promise(resolve=> setTimeout(resolve, ms));
 	win.randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -78,7 +80,6 @@ export class ALS_API {
 		});
 
 		return this.lang(type, await response.json(), query);
-		//return response.json();
 	};
 };
 export class NEIS_API {

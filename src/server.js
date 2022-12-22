@@ -8,6 +8,7 @@ import messageCommands from "./interactions/ctxm/users/callback";
 const options = {
 	applicationId: env.APPLICATION_ID,
 	applicationPublicKey: env.PUBLIC_KEY,
+	applicationSecret: !env.IS_DEPLOY_MODE || env.SECRET_KEY,
 	commands,
 	userCommands,
 	messageCommands
@@ -17,7 +18,7 @@ const options = {
 const Handler = {
 	interactions: createHandler(options),
 	authorize: authorizeResponse,
-	deployCommands: deployCommands
+	deployCommands: ()=> deployCommands(options)
 };
 //export default {fetch: Handler.interaction};
 export default {
@@ -31,11 +32,10 @@ export default {
 			case "/deploy": {
 				if(env.IS_DEPLOY_MODE) {
 					if(request.method !== 'POST') return new Response("The method not allowed", {status: 405});
-					if(searchParams.get('secret') !== env.SECRET_KEY) return new Response("Unauthorized", {status: 401});
+					if(searchParams.get('secret') !== options.applicationSecret) return new Response("Unauthorized", {status: 401});
 					
-					options["applicationSecret"] = env.SECRET_KEY;
 					try {
-						await Handler.deployCommands(options);
+						await Handler.deployCommands();
 						return new Response("SUCCESS", {status: 200});
 					} catch(error){
 						console.error(error);
@@ -44,7 +44,7 @@ export default {
 				}
 			};
 			case "/invite": {
-				return Handler.authorize(cfg.APPLICATION_ID);
+				return Handler.authorize(env.APPLICATION_ID);
 			};
 			default: {
 				return new Response("No Bitches lol", {status: 404});

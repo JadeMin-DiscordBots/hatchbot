@@ -15,13 +15,16 @@ const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);
 
 
-export default function 시간표() {
+
+export default function() {
 	useDescription("시간표를 확인합니다.");
 	const GRADE = useInteger("학년", "학년을 입력해주세요.", {
-		required: true
+		required: true,
+		min: 1, max: 3
 	});
 	const CLASS_NM = useInteger("반", "반을 입력해주세요.", {
-		required: true
+		required: true,
+		min: 1, max: 20
 	});
 	const days = useString("날짜", "날짜를 입력해주세요.", {
 		required: false,
@@ -72,29 +75,29 @@ export default function 시간표() {
 		
 		return (
 			<Message>
-				<Embed
-					title={
-						isError?
-							api.error.CODE == "INFO-200"?
-								"오늘자 시간표가 없습니다."
-								:
-								"데이터를 불러오는 중 오류가 발생했습니다."
-							:
-							`:calendar_spiral: ${api.data[0].GRADE}학년 ${api.data[0].CLASS_NM}반 시간표`
-					}
-					footer={`${nowDate}자`}
-				>
-					{
-						isError?
-							api.error.MESSAGE
-							:
-							api.data.map((time, index) => (
+				{
+					isError?
+						<Embed
+							title={
+								api.error.CODE == "INFO-200"?
+									"오늘자 시간표가 없습니다."
+									:
+									"데이터를 불러오는 중 오류가 발생했습니다."
+							}
+							footer={api.error.MESSAGE}
+						></Embed>
+						:
+						<Embed
+							title={`:calendar_spiral: ${api.data[0].GRADE}학년 ${api.data[0].CLASS_NM}반 시간표`}
+							footer={`${nowDate}자`}
+						>
+							{api.data.map((time, index) => (
 								<Field name={`${index+1}교시`}>
 									{time.ITRT_CNTNT}
 								</Field>
-							))
-					}
-				</Embed>
+							))}
+						</Embed>
+				}
 			</Message>
 		);
 	};
