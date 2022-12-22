@@ -1,5 +1,6 @@
 import { build } from 'esbuild';
 import env from "../secrets.json" assert {type: 'json'};
+
 const isDeployMode =  process.argv.slice(2)[0] === 'deploy';
 
 

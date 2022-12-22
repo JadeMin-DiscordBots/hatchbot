@@ -10,7 +10,7 @@ import {
 	ALS_API,
 	setTweaks,
 	formatMinutes
-} from "./modules/tweak_functions";
+} from "../../../.modules/tweak_functions";
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const ALS = new ALS_API(env.ALS_TOKEN);
 setTweaks(self);

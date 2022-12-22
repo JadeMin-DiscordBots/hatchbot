@@ -9,7 +9,7 @@ import {
 	WebLogger,
 	NEIS_API,
 	setTweaks
-} from "./modules/tweak_functions";
+} from "../../../.modules/tweak_functions";
 import Meal from "./components/급식";
 setTweaks(self);
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);

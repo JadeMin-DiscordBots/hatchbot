@@ -9,7 +9,7 @@ import {
 	WebLogger,
 	setTweaks,
 	formatMinutes
-} from "./modules/tweak_functions";
+} from "../../../.modules/tweak_functions";
 setTweaks(self);
 
 

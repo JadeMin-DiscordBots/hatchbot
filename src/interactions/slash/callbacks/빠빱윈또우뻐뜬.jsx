@@ -8,7 +8,7 @@ import {
 import {
 	WebLogger,
 	setTweaks, escapers,
-} from "./modules/tweak_functions";
+} from "../../../.modules/tweak_functions";
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
 

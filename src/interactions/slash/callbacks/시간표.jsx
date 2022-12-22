@@ -9,7 +9,7 @@ import {
 	WebLogger,
 	NEIS_API,
 	setTweaks
-} from "./modules/tweak_functions";
+} from "../../../.modules/tweak_functions";
 setTweaks(self);
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);

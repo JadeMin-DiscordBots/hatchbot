@@ -3,8 +3,8 @@ import {
 	deployCommands
 } from 'slshx';
 import commands from "./interactions/slash/callback";
-import userCommands from "./interactions/ctxm/messages/callback";
-import messageCommands from "./interactions/ctxm/users/callback";
+import userCommands from "./interactions/ctxm/users/callback";
+import messageCommands from "./interactions/ctxm/messages/callback";
 const options = {
 	applicationId: env.APPLICATION_ID,
 	applicationPublicKey: env.PUBLIC_KEY,
@@ -20,7 +20,6 @@ const Handler = {
 	authorize: authorizeResponse,
 	deployCommands: ()=> deployCommands(options)
 };
-//export default {fetch: Handler.interaction};
 export default {
 	async fetch(request, cfg, ctx) {
 		const { pathname, searchParams } = new URL(request.url);
