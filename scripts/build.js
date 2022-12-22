@@ -5,7 +5,7 @@ const isDeployMode =  process.argv.slice(2)[0] === 'deploy';
 
 const define = {
 	"env.IS_DEPLOY_MODE": JSON.stringify(isDeployMode),
-	
+
 	"env.APPLICATION_ID": JSON.stringify(env["APPLICATION_ID"]),
 	"env.PUBLIC_KEY": JSON.stringify(env["PUBLIC_KEY"]),
 	"env.SECRET_KEY": JSON.stringify(env["SECRET_KEY"]),
@@ -33,4 +33,5 @@ await build({
 
 	define
 });
-console.log("✅ - 빌드 작업이 완료되었습니다!");
+
+console.log(`✅ - ${isDeployMode? "명령어 배포용 로컬 서버의 빌드 작업이 완료되었습니다!":"프로덕션 서버의 빌드 작업이 완료되었습니다!"}`);

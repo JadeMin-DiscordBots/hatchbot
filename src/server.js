@@ -17,7 +17,7 @@ const options = {
 const Handler = {
 	interactions: createHandler(options),
 	authorize: authorizeResponse,
-	deploy: ()=> deployCommands(options)
+	deployCommands: deployCommands
 };
 //export default {fetch: Handler.interaction};
 export default {
@@ -33,12 +33,13 @@ export default {
 					if(request.method !== 'POST') return new Response("The method not allowed", {status: 405});
 					if(searchParams.get('secret') !== env.SECRET_KEY) return new Response("Unauthorized", {status: 401});
 					
+					options["applicationSecret"] = env.SECRET_KEY;
 					try {
-						await Handler.deploy();
-						return new Response("Success", {status: 200});
+						await Handler.deployCommands(options);
+						return new Response("SUCCESS", {status: 200});
 					} catch(error){
 						console.error(error);
-						return new Response("Error", {status: 500});
+						return new Response("ERROR", {status: 500});
 					}
 				}
 			};
