@@ -1,5 +1,4 @@
 dist
 node_modules
-scripts
 secrets.json
 secrets.jsonc

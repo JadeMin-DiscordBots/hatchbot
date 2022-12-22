@@ -5,16 +5,23 @@
 	"type": "module",
 	"module": "dist/index.mjs",
 	"scripts": {
-		"build": "node --no-warnings --experimental-vm-modules build.js",
-		"deploy": "wrangler publish",
-		"dev": "wrangler dev",
-		"unstable:deploy": "node --no-warnings --experimental-vm-modules ./scripts/deploy.js"
+		"log": "wrangler tail",
+
+		"publish": "wrangler publish",
+		"publish:log": "npm run publish && npm run log",
+		
+		"deploy": "node --no-warnings --experimental-vm-modules ./scripts/deploy.js && npm run publish",
+		"deploy:log": "npm run deploy && npm run log",
+		
+		"dev": "wrangler dev -l",
+		"build": "node --no-warnings --experimental-vm-modules ./scripts/build.js publish"
 	},
 	"dependencies": {
 		"slshx": "^0.3.0"
 	},
 	"devDependencies": {
 		"esbuild": "^0.16.7",
+		"miniflare": "^2.11.0",
 		"wrangler": "^2.6.2"
 	}
 }

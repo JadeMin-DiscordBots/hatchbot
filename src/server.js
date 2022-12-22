@@ -8,7 +8,6 @@ import messageCommands from "./interactions/ctxm/users/callback";
 const options = {
 	applicationId: env.APPLICATION_ID,
 	applicationPublicKey: env.PUBLIC_KEY,
-	applicationSecret: env.BOT_TOKEN,
 	commands,
 	userCommands,
 	messageCommands
@@ -18,23 +17,34 @@ const options = {
 const Handler = {
 	interactions: createHandler(options),
 	authorize: authorizeResponse,
-	deployCommands: ()=> deployCommands(options)
+	deploy: ()=> deployCommands(options)
 };
 //export default {fetch: Handler.interaction};
 export default {
-	async fetch(request, env, ctx) {
-		const { pathname } = new URL(request.url);
+	async fetch(request, cfg, ctx) {
+		const { pathname, searchParams } = new URL(request.url);
 
 		switch(pathname) {
 			case "/interactions": {
-				return Handler.interactions(request, env, ctx);
+				return Handler.interactions(request, cfg, ctx);
 			};
 			case "/deploy": {
-				Handler.deployCommands();
-			}
-			/*case "/invite": {
-				return Handler.authorize(env.APPLICATION_ID);
-			};*/
+				if(env.IS_DEPLOY_MODE) {
+					if(request.method !== 'POST') return new Response("The method not allowed", {status: 405});
+					if(searchParams.get('secret') !== env.SECRET_KEY) return new Response("Unauthorized", {status: 401});
+					
+					try {
+						await Handler.deploy();
+						return new Response("Success", {status: 200});
+					} catch(error){
+						console.error(error);
+						return new Response("Error", {status: 500});
+					}
+				}
+			};
+			case "/invite": {
+				return Handler.authorize(cfg.APPLICATION_ID);
+			};
 			default: {
 				return new Response("No Bitches lol", {status: 404});
 			};

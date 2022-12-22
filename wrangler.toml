@@ -7,10 +7,11 @@ routes = [
 ]
 
 [build]
-command = "node --no-warnings ./build.js"
+command = "node --no-warnings ./scripts/build.js publish"
+
 
 [miniflare]
 kv_persist = true
 cache_persist = true
 durable_objects_persist = true
-global_async_io = true	# Required by Slshx
+global_async_io = true # Required by Slshx

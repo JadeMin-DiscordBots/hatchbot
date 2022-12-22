@@ -15,7 +15,7 @@ setTweaks(self);
 
 
 export default function 도움말() {
-	useDescription("사용 가능한 모든 명령어와 사용법을 확인합니다.")
+	useDescription("사용 가능한 모든 명령어와 사용법을 확인합니다.");
 	return () => (
 		<Message>
 			<Embed title="도움말 목록을 불러오는 중입니다...">

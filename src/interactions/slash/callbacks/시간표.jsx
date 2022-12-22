@@ -8,7 +8,9 @@ import {
 import {
 	WebLogger,
 	NEIS_API,
+	setTweaks
 } from "./modules/tweak_functions";
+setTweaks(self);
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);
 
@@ -21,12 +23,37 @@ export default function 시간표() {
 	const CLASS_NM = useInteger("반", "반을 입력해주세요.", {
 		required: true
 	});
+	const days = useString("날짜", "날짜를 입력해주세요.", {
+		required: false,
+		choices: [{
+			name: "내일",
+			value: "1"
+		}, {
+			name: "모레",
+			value: "2"
+		}, {
+			name: "3일",
+			value: "3"
+		}, {
+			name: "4일",
+			value: "4"
+		}, {
+			name: "5일",
+			value: "5"
+		}, {
+			name: "6일",
+			value: "6"
+		}, {
+			name: "7일",
+			value: "7"
+		}]
+	}) ?? "0";
 
 
 	const nowDate = Intl.DateTimeFormat('ko-KR', {
 		dateStyle: 'long',
 		timeZone: "Asia/Seoul",
-	}).format(new Date());
+	}).format(new Date().addDays(+days));
 	const options = {
 		"ATPT_OFCDC_SC_CODE": "J10" /*useString("지역코드")*/,
 		"SD_SCHUL_CODE": "7530474" /*useInteger("학교코드")*/,
