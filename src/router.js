@@ -31,7 +31,6 @@ if(env.IS_DEPLOY_MODE) {
 				await handler.deployCommands(options);
 				return new Response("SUCCESS", {status: 200});
 			} catch(error) {
-				console.error(error);
 				return new Response("ERROR", {status: 500});
 			}
 		} else {
