@@ -14,6 +14,7 @@ export default (error) => {
 			timestamp: new Date()
 		}]
 	});
+	console.error(error);
 
-	throw error;
+	return new Response("ERROR", {status: 500});
 };

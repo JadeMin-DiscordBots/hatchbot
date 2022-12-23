@@ -113,15 +113,16 @@ export class WebLogger {
 		return text;
 	};
 	async send(body, options) {
-		const loghookUrl = `https://discord.com/api/webhooks/${this.id}/${this.token}`;
-		const response = await fetch(loghookUrl, {
+		const response = await fetch(`https://discord.com/api/webhooks/${this.id}/${this.token}`, {
 			method: 'POST',
 			headers: {'Content-Type': "application/json;charset=UTF-8"},
 			body: JSON.stringify(body),
 			...options
 		});
+		const responseBody = await response.waitForBody();
+		console.debug(responseBody);
 
-		return response.waitForBody();
+		return responseBody;
 	};
 	async log(message, options) {
 		if(message?.constructor !== Object) {
@@ -129,27 +130,21 @@ export class WebLogger {
 				message = message.replace(/\$code/i, `\`\`\`${options.language}\n${options.code}\`\`\``).replace(/\\\\/g, '\\');
 			}
 			console.log(message);
-			console.debug(
-				await this.send({
-					content: message.substring(0, 1999)
-				})
-			);
+			await this.send({
+				content: message.substring(0, 1999)
+			});
 		} else {
 			console.log(message);
 			const stringifiedMsg = this.#toStringForce(message);
 			if(stringifiedMsg.length > 2000) {
 				const warnMsg = "\n로그 메시지가 2000자를 초과하여 일부 내용이 누락되었습니다.\n[CloudFlare Workers](https://dash.cloudflare.com/?to=/:account/workers/overview)에서 전체 로그를 확인하세요.";
-				console.debug(
-					await this.send({
-						content: `\`\`\`${stringifiedMsg.substring(0, 1994-warnMsg.length)}\`\`\`${warnMsg}`,
-					})
-				);
+				await this.send({
+					content: `\`\`\`${stringifiedMsg.substring(0, 1994-warnMsg.length)}\`\`\`${warnMsg}`,
+				});
 			} else {
-				console.debug(
-					await this.send({
-						content: `\`\`\`json\n${stringifiedMsg.substring(0, 1994)}\`\`\``
-					})
-				);
+				await this.send({
+					content: `\`\`\`json\n${stringifiedMsg.substring(0, 1994)}\`\`\``
+				});
 			}
 		}
 	};
