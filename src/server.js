@@ -37,7 +37,7 @@ if(env.IS_DEPLOY_MODE) {
 		}
 	});
 } else {
-	Router.post('/interactions', async (request, workerSecret, workerContext) => {
+	Router.post('/interaction', async (request, workerSecret, workerContext) => {
 		try {
 			return await handler.interactions(request, workerSecret, workerContext);
 		} catch(error) {
