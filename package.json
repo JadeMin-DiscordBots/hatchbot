@@ -7,12 +7,12 @@
 		"log": "wrangler tail",
 		"publish": "wrangler publish && echo ✅ - Cloudflare Workers에 업로드되었습니다!",
 		"publish:log": "npm run publish && npm run log",
+		"publish:test": "wrangler dev -l",
 		"deploy": "node --no-warnings --experimental-vm-modules ./scripts/deploy.js && npm run publish",
 		"deploy:log": "npm run deploy && npm run log",
 
-		"dev": "wrangler dev -l",
-		"build:deploy": "node --no-warnings --experimental-vm-modules ./scripts/build.js deploy",
-		"build:publish": "node --no-warnings --experimental-vm-modules ./scripts/build.js publish"
+		"build:publish": "node --no-warnings --experimental-vm-modules ./scripts/build.js publish",
+		"build:deploy": "node --no-warnings --experimental-vm-modules ./scripts/build.js deploy"
 	},
 	"dependencies": {
 		"itty-router": "^3.0.10",

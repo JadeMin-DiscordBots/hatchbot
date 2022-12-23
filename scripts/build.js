@@ -1,8 +1,6 @@
 import { build } from 'esbuild';
 import env from "../secrets.json" assert {type: 'json'};
-
 const isDeployMode =  process.argv.slice(2)[0] === 'deploy';
-
 
 
 const define = {
@@ -39,4 +37,4 @@ await build({
 	define
 });
 
-console.log(`✅ - ${isDeployMode? "명령어 배포용 서버의 빌드 작업이 완료되었습니다!":"프로덕션용 서버의 빌드 작업이 완료되었습니다!"}`);
+console.log(`✅ - ${isDeployMode? "명령어 배포용 로컬서버":"프로덕션용 서버"}의 빌드 작업이 완료되었습니다!`);
