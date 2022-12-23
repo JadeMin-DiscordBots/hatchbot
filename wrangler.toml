@@ -1,9 +1,9 @@
 workers_dev = false
-name = "sayhi-bot"
+name = "hatch-bot"
 main = "./dist/server.mjs"
 compatibility_date = "2022-12-14"
 routes = [
-	{ zone_name="klartnet.ml", pattern="sayhi.discord.klartnet.ml", custom_domain=true }
+	{ zone_name="klartnet.ml", pattern="hatch-bot.discord.klartnet.ml", custom_domain=true }
 ]
 
 [build]

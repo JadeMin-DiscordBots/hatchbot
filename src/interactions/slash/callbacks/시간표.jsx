@@ -75,28 +75,29 @@ export default function() {
 		
 		return (
 			<Message>
-				{
-					isError?
-						<Embed
-							title={
-								api.error.CODE == "INFO-200"?
-									"오늘자 시간표가 없습니다."
-									:
-									"데이터를 불러오는 중 오류가 발생했습니다."
-							}
-							footer={api.error.MESSAGE}
-						></Embed>
-						:
-						<Embed
-							title={`:calendar_spiral: ${api.data[0].GRADE}학년 ${api.data[0].CLASS_NM}반 시간표`}
-							footer={`${nowDate}자`}
-						>
-							{api.data.map((time, index) => (
-								<Field name={`${index+1}교시`}>
-									{time.ITRT_CNTNT}
-								</Field>
-							))}
-						</Embed>
+				{isError?
+					<Embed
+						title={
+							api.error.CODE == "INFO-200"?
+								"오늘자 시간표가 없습니다."
+								:
+								"데이터를 불러오는 중 오류가 발생했습니다."
+						}
+						footer={`${nowDate}자`}
+					>
+						{api.error.MESSAGE}
+					</Embed>
+					:
+					<Embed
+						title={`:calendar_spiral: ${api.data[0].GRADE}학년 ${api.data[0].CLASS_NM}반 시간표`}
+						footer={`${nowDate}자`}
+					>
+						{api.data.map((time, index) => (
+							<Field name={`${index+1}교시`}>
+								{time.ITRT_CNTNT}
+							</Field>
+						))}
+					</Embed>
 				}
 			</Message>
 		);

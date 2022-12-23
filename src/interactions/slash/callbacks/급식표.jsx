@@ -69,31 +69,32 @@ export default function() {
 		
 		return (
 			<Message>
-				{
-					isError?
-						<Embed
-							title={
-								api.error.CODE == "INFO-200"?
-									"오늘자 급식이 없습니다."
-									:
-									"데이터를 불러오는 중 오류가 발생했습니다."
-							}
-							footer={api.error.MESSAGE}
-						></Embed>
-						:
-						<>
-							<Meal.MenuEmbed
-								title=":bento: 오늘의 급식"
-								footer={`${nowDate}자`}
+				{isError?
+					<Embed
+						title={
+							api.error.CODE == "INFO-200"?
+								"오늘자 급식이 없습니다."
+								:
+								"데이터를 불러오는 중 오류가 발생했습니다."
+						}
+						footer={`${nowDate}자`}
+					>
+						{api.error.MESSAGE}
+					</Embed>
+					:
+					<>
+						<Meal.MenuEmbed
+							title=":bento: 오늘의 급식"
+							footer={`${nowDate}자`}
+							data={api.data[0]}
+						/>
+						{isNtrMode?
+							<Meal.NutritionEmbed
+								title="영양 정보"
 								data={api.data[0]}
-							/>
-							{isNtrMode?
-								<Meal.NutritionEmbed
-									title="영양 정보"
-									data={api.data[0]}
-								/> : ''
-							}
-						</>
+							/> : ''
+						}
+					</>
 				}
 			</Message>
 		);

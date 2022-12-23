@@ -4,6 +4,8 @@ const isDeployMode =  process.argv.slice(2)[0] === 'deploy';
 
 
 const define = {
+	"globalThis.MINIFLARE": "false",
+
 	"env.IS_DEPLOY_MODE": JSON.stringify(isDeployMode),
 
 	"env.APPLICATION_ID": JSON.stringify(env["APPLICATION_ID"]),
