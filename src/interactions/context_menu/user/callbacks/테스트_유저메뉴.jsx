@@ -14,7 +14,7 @@ const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
 
 export default {
-	"테스트 유저 메뉴": function() {
+	"테스트 유저 메뉴": () => {
 		return (interaction, cfg, ctx, user) => (
 			<Message ephemeral>
 				{`<@${user.id}>님의 유저 메뉴를 누르셨네요.`}

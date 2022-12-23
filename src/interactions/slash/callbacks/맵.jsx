@@ -47,14 +47,14 @@ export default function() {
 				<Embed
 					title={`:map: 현재 맵: \`${data.current.map}\``}
 					image={data.current.asset}
-					footer={`이 맵은 ${formatMinutes(data.current.DurationInMinutes)} 동안 유지됩니다`}
+					footer={`이 맵은 ${formatMinutes(data.current.DurationInMinutes)} 동안 유지됩니다.`}
 				>
 					{`<t:${data.current.start}:R>에 시작되었습니다.`}
 				</Embed>
 				<Embed
 					title={`:map: 다음 맵: \`${data.next.map}\``}
 					image={data.next.asset}
-					footer={`이 맵은 ${formatMinutes(data.next.DurationInMinutes)} 동안 유지됩니다`}
+					footer={`이 맵은 ${formatMinutes(data.next.DurationInMinutes)} 동안 유지됩니다.`}
 				>
 					{`> <t:${data.next.start}:R>에 시작됩니다.`}
 				</Embed>
