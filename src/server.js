@@ -3,7 +3,7 @@ import {
 	createHandler,
 	deployCommands
 } from 'slshx';
-import { commands, userCommands, messageCommands, exceptions } from "./handler";
+import { commands, userCommands, messageCommands, exceptions } from "./handlers";
 const Router = IttyRouter();
 const options = {
 	applicationId: env.APPLICATION_ID,
@@ -16,7 +16,7 @@ const options = {
 };
 const handler = {
 	interactions: createHandler(options),
-	exceptions,
+	exceptions: exceptions,
 	deployCommands: deployCommands
 };
 
@@ -29,6 +29,7 @@ if(env.IS_DEPLOY_MODE) {
 				await handler.deployCommands(options);
 				return new Response("Successfully Deployed", {status: 200});
 			} catch(error){
+				console.error(error);
 				return new Response("Deploy Error", {status: 500});
 			}
 		} else {
