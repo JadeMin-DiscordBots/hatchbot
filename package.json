@@ -3,20 +3,19 @@
 	"name": "sayhi-bot",
 	"version": "0.0.0",
 	"type": "module",
-	"module": "./dist/index.mjs",
 	"scripts": {
 		"log": "wrangler tail",
-
 		"publish": "wrangler publish && echo ✅ - Cloudflare Workers에 업로드되었습니다!",
 		"publish:log": "npm run publish && npm run log",
-		
 		"deploy": "node --no-warnings --experimental-vm-modules ./scripts/deploy.js && npm run publish",
 		"deploy:log": "npm run deploy && npm run log",
-		
+
 		"dev": "wrangler dev -l",
-		"build": "node --no-warnings --experimental-vm-modules ./scripts/build.js publish"
+		"build:deploy": "node --no-warnings --experimental-vm-modules ./scripts/build.js deploy",
+		"build:publish": "node --no-warnings --experimental-vm-modules ./scripts/build.js publish"
 	},
 	"dependencies": {
+		"itty-router": "^3.0.10",
 		"slshx": "^0.3.0"
 	},
 	"devDependencies": {
