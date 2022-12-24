@@ -31,7 +31,7 @@ export default function() {
 	});
 
 
-	const readableDate = DateTime.fromISO(DAY).toFormat("yyyy년 MM월 dd일");
+	const readableDate = DateTime.fromISO(DAY).toFormat("MM월 dd일(EEE)");
 	const options = {
 		"ATPT_OFCDC_SC_CODE": "J10",
 		"SD_SCHUL_CODE": "7530474",
@@ -52,19 +52,18 @@ export default function() {
 					<Embed
 						title={
 							api.error.CODE == "INFO-200"?
-								"급식이 없습니다."
+								`${readableDate} 급식이 없습니다.`
 								:
 								"데이터를 불러오는 중 오류가 발생했습니다."
 						}
-						footer={`${readableDate}자`}
+						footer={readableDate}
 					>
-						{`> ${api.error.MESSAGE}`}
+						{`> \`${api.error.CODE}\`: ${api.error.MESSAGE}`}
 					</Embed>
 					:
 					<>
 						<Meal.MenuEmbed
-							title=":bento: 오늘의 급식"
-							footer={`${readableDate}자`}
+							title={`:bento: ${readableDate} 급식표`}
 							data={api.data[0]}
 						/>
 						{isNtrMode?

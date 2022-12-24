@@ -7,7 +7,7 @@ export default {
 			const thisDate = dateTime.plus({days: day});
 
 			return {
-				name: thisDate.toFormat(`+${day}일 (MM-dd EEEE)`),
+				name: thisDate.toFormat(`+${day}일 (EEE MM-dd)`),
 				value: thisDate.toISO()
 			};
 		});

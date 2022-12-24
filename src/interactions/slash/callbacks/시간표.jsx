@@ -33,12 +33,12 @@ export default function() {
 		required: false,
 		autocomplete: ()=> AutoComplete.week(new DateTime(Date.now()))
 	}) ?? new DateTime(Date.now()).toISO();
+
 	
-	
-	const readableDate = DateTime.fromISO(DAY).toFormat("yyyy년 MM월 dd일");
+	const readableDate = DateTime.fromISO(DAY).toFormat("MM월 dd일(EEE)");
 	const options = {
-		"ATPT_OFCDC_SC_CODE": "J10" /*useString("지역코드")*/,
-		"SD_SCHUL_CODE": "7530474" /*useInteger("학교코드")*/,
+		"ATPT_OFCDC_SC_CODE": "J10",
+		"SD_SCHUL_CODE": "7530474",
 		"GRADE": GRADE,
 		"CLASS_NM": CLASS_NM,
 		"ALL_TI_YMD": DateTime.fromISO(DAY).toFormat("yyyyMMdd")
@@ -62,14 +62,14 @@ export default function() {
 								:
 								"데이터를 불러오는 중 오류가 발생했습니다."
 						}
-						footer={`${readableDate}자`}
+						footer={readableDate}
 					>
 						{`> ${api.error.MESSAGE}`}
 					</Embed>
 					:
 					<Embed
 						title={`:calendar_spiral: ${api.data[0].GRADE}학년 ${api.data[0].CLASS_NM}반 시간표`}
-						footer={`${readableDate}자`}
+						footer={readableDate}
 					>
 						{api.data.map((time, index) => (
 							<Field name={`${index+1}교시`}>
