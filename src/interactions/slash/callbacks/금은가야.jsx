@@ -1,3 +1,8 @@
+import _ from 'lodash';
+import {
+	WebLogger,
+	escapers,
+} from "../../../.modules/tweak_functions";
 import {
 	createElement,
 	useDescription,
@@ -5,12 +10,7 @@ import {
 	Fragment, Message, Embed, Field, Modal, Button, Input, Row,
 	useButton, useModal, useInput,
 } from 'slshx';
-import {
-	WebLogger,
-	setTweaks, escapers,
-} from "../../../.modules/tweak_functions";
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
-setTweaks(self);
 
 
 
@@ -37,10 +37,10 @@ export default function() {
 	
 	switch(type){
 		case "shuffle": {
-			return () => <Message>{escapers.all(msg.repeat(repeat).shuffle().substr(0, 2000))}</Message>;
+			return () => <Message>{escapers.all(_.shuffle(msg.repeat(repeat).split('')).join('')).substr(0, 2000)}</Message>;
 		};
 		case "reverse": {
-			return () => <Message>{escapers.all(msg.repeat(repeat).reverse().substr(0, 2000))}</Message>;
+			return () => <Message>{escapers.all(msg.repeat(repeat).split('').reverse().join('')).substr(0, 2000)}</Message>;
 		};
 		default: {
 			return () => <Message>{type}은(는) 존재하지 않는 타입입니다.</Message>;

@@ -1,3 +1,8 @@
+import _ from 'lodash';
+import {
+	WebLogger,
+	formatMinutes
+} from "../../../.modules/tweak_functions";
 import {
 	createElement,
 	useDescription,
@@ -5,12 +10,6 @@ import {
 	Fragment, Message, Embed, Field, Modal, Button, Input, Row,
 	useButton, useModal, useInput,
 } from 'slshx';
-import {
-	WebLogger,
-	setTweaks,
-	formatMinutes
-} from "../../../.modules/tweak_functions";
-setTweaks(self);
 
 
 
@@ -28,7 +27,7 @@ export default function() {
 	return () => (
 		<Message>
 			<Embed title="도움말 목록을 불러오는 중입니다...">
-				{`예상 완료 시간 : \`${formatMinutes(randomInt(96854851, 6857485141))}\``}
+				{`예상 완료 시간 : \`${formatMinutes(_.random(96854851, 6857485141))}\``}
 			</Embed>
 		</Message>
 	);

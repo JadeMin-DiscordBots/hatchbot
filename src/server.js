@@ -3,7 +3,7 @@ import {
 	createHandler,
 	deployCommands
 } from 'slshx';
-import { commands, userCommands, messageCommands, exceptions } from "./handlers";
+import { commands, userCommands, messageCommands, onExceptions } from "./interaction";
 const Router = IttyRouter();
 const options = {
 	applicationId: env.APPLICATION_ID,
@@ -12,11 +12,14 @@ const options = {
 	commands,
 	userCommands,
 	messageCommands,
-	permissions: 8
+	auth: {
+		scopes: ["bot", "applications.commands"],
+		permissions: 8
+	}
 };
 const handler = {
 	interactions: createHandler(options),
-	exceptions: exceptions,
+	onExceptions: onExceptions,
 	deployCommands: deployCommands
 };
 
@@ -41,14 +44,14 @@ if(env.IS_DEPLOY_MODE) {
 		try {
 			return await handler.interactions(request, workerSecret, workerContext);
 		} catch(error) {
-			return handler.exceptions(error);
+			return await handler.onExceptions(error);
 		}
 	});
 	Router.get('/invite', () => {
 		const inviteUrl = new URL("https://discord.com/api/oauth2/authorize");
 		inviteUrl.searchParams.set('client_id', options.applicationId);
-		inviteUrl.searchParams.set('scope', "bot applications.commands");
-		inviteUrl.searchParams.set('permissions', options.permissions);
+		inviteUrl.searchParams.set('scope', options.auth.scopes.join(' '));
+		inviteUrl.searchParams.set('permissions', options.auth.permissions);
 		
 		return Response.redirect(inviteUrl.toString(), 302);
 	});

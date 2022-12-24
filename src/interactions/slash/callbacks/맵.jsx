@@ -1,19 +1,17 @@
 import {
+	WebLogger,
+	ALS_API,
+	formatMinutes
+} from "../../../.modules/tweak_functions";
+import {
 	createElement,
 	useDescription,
 	useString, useNumber, useInteger, useBoolean,
 	Fragment, Message, Embed, Field, Modal, Button, Input, Row,
 	useButton, useModal, useInput,
 } from 'slshx';
-import {
-	WebLogger,
-	ALS_API,
-	setTweaks,
-	formatMinutes
-} from "../../../.modules/tweak_functions";
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const ALS = new ALS_API(env.ALS_TOKEN);
-setTweaks(self);
 
 
 

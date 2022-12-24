@@ -1,14 +1,14 @@
 import {
+	WebLogger,
+	escapers,
+} from "../../../.modules/tweak_functions";
+import {
 	createElement,
 	useDescription,
 	useString, useNumber, useInteger, useBoolean,
 	Fragment, Message, Embed, Field, Modal, Button, Input, Row,
 	useButton, useModal, useInput,
 } from 'slshx';
-import {
-	WebLogger,
-	setTweaks, escapers,
-} from "../../../.modules/tweak_functions";
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
 
@@ -16,8 +16,8 @@ const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 export default function() {
 	useDescription("popup_window_button");
 	const [popupPassword_id, popupPassword_value] = useInput();
-	const popupWindow_id = useModal(interaction => {
-		Logger.log(`<@${interaction.member.user.id}> | 빠빱\\_윈또우\\_뻐뜬 > \`\`${escapers.backtick(popupPassword_value)}\`\``);
+	const popupWindow_id = useModal(async interaction => {
+		await Logger.log(`<@${interaction.member.user.id}> | 빠빱\\_윈또우\\_뻐뜬 > \`\`${escapers.all(popupPassword_value)}\`\``);
 		
 		return (
 			<Message ephemeral>

@@ -1,3 +1,10 @@
+import _ from 'lodash';
+import { DateTime, Settings } from 'luxon';
+import {
+	WebLogger,
+	NEIS_API,
+	luxonSetup
+} from "../../../.modules/tweak_functions";
 import {
 	createElement,
 	useDescription,
@@ -5,12 +12,8 @@ import {
 	Fragment, Message, Embed, Field, Modal, Button, Input, Row,
 	useButton, useModal, useInput,
 } from 'slshx';
-import {
-	WebLogger,
-	NEIS_API,
-	setTweaks
-} from "../../../.modules/tweak_functions";
-setTweaks(self);
+import AutoComplete from "./components/AutoComplete";
+luxonSetup(Settings);
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);
 
@@ -24,45 +27,21 @@ export default function() {
 	});
 	const CLASS_NM = useInteger("반", "반을 입력해주세요.", {
 		required: true,
-		min: 1, max: 20
+		min: 1, max: 12
 	});
-	const days = useString("날짜", "날짜를 입력해주세요.", {
+	const DAY = useString("날짜", "날짜를 입력해주세요.", {
 		required: false,
-		choices: [{
-			name: "내일",
-			value: "1"
-		}, {
-			name: "모레",
-			value: "2"
-		}, {
-			name: "3일",
-			value: "3"
-		}, {
-			name: "4일",
-			value: "4"
-		}, {
-			name: "5일",
-			value: "5"
-		}, {
-			name: "6일",
-			value: "6"
-		}, {
-			name: "7일",
-			value: "7"
-		}]
-	}) ?? "0";
-
-
-	const nowDate = Intl.DateTimeFormat('ko-KR', {
-		dateStyle: 'long',
-		timeZone: "Asia/Seoul",
-	}).format(new Date().addDays(+days));
+		autocomplete: ()=> AutoComplete.week(new DateTime(Date.now()))
+	}) ?? new DateTime(Date.now()).toISO();
+	
+	
+	const readableDate = DateTime.fromISO(DAY).toFormat("yyyy년 MM월 dd일");
 	const options = {
 		"ATPT_OFCDC_SC_CODE": "J10" /*useString("지역코드")*/,
 		"SD_SCHUL_CODE": "7530474" /*useInteger("학교코드")*/,
 		"GRADE": GRADE,
 		"CLASS_NM": CLASS_NM,
-		"ALL_TI_YMD": nowDate.replace(/[년월일]\s?/g, '')
+		"ALL_TI_YMD": DateTime.fromISO(DAY).toFormat("yyyyMMdd")
 	};
 
 	return async function*(interaction) {
@@ -79,18 +58,18 @@ export default function() {
 					<Embed
 						title={
 							api.error.CODE == "INFO-200"?
-								"오늘자 시간표가 없습니다."
+								"시간표가 없습니다."
 								:
 								"데이터를 불러오는 중 오류가 발생했습니다."
 						}
-						footer={`${nowDate}자`}
+						footer={`${readableDate}자`}
 					>
-						{api.error.MESSAGE}
+						{`> ${api.error.MESSAGE}`}
 					</Embed>
 					:
 					<Embed
 						title={`:calendar_spiral: ${api.data[0].GRADE}학년 ${api.data[0].CLASS_NM}반 시간표`}
-						footer={`${nowDate}자`}
+						footer={`${readableDate}자`}
 					>
 						{api.data.map((time, index) => (
 							<Field name={`${index+1}교시`}>

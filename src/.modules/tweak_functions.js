@@ -18,38 +18,6 @@ Response.prototype.waitForBody = async function(){
 
 
 
-export const setTweaks = win => {
-	win.Array.prototype.random = function(){
-		return this[Math.floor(Math.random() * this.length)];
-	};
-	win.String.prototype.shuffle = function(){
-		return this.split('').sort(() => Math.random() - 0.5).join('');
-	};
-	win.String.prototype.reverse = function(){
-		return this.split('').reverse().join('');
-	};
-
-	win.Date.prototype.addDays = function(days) {
-		var date = new Date(this.valueOf());
-		date.setDate(date.getDate() + days);
-		return date;
-	};
-	win.Date.prototype.minusDays = function(days) {
-		var date = new Date(this.valueOf());
-		date.setDate(date.getDate() - days);
-		return date;
-	};
-
-	win.Response.prototype.waitForBody = Response.prototype.waitForBody;
-
-
-	win.sleep = (ms) => new Promise(resolve=> setTimeout(resolve, ms));
-	win.randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-
-
-
 export class ALS_API {
 	constructor(token) {
 		this.token = token;
@@ -187,5 +155,15 @@ export const formatMinutes = minutes => {
 
 export const escapers = {
 	backtick: msg => msg.replace(/(`)/g, "\\$1"),
-	all: msg => msg.replace(/([`*_~<>@|])/g, "\\$1")
+	all: msg => msg.replace(/([()\[\]`*_~<>@|])/g, "\\$1")
+};
+
+
+
+
+export const luxonSetup = (Settings) => {
+	Settings.defaultLocale = 'ko';
+	Settings.defaultZone = 'Asia/Seoul';
+
+	return Settings;
 };
