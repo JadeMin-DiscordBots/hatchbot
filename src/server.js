@@ -60,7 +60,6 @@ Router.all('*', () => {
 	return new Response("No bitches lol", {status: 404});
 });
 
-
 export default {
 	async fetch(request, workerSecret, workerContext) {
 		return Router.handle(request, workerSecret, workerContext);
