@@ -27,7 +27,7 @@ export default function() {
 	const type = useString("기법", "암호화 기법을 선택하세요", {
 		required: true,
 		choices: [{
-			name: "계금가야",
+			name: "금금가야",
 			value: "stair"
 		}, {
 			name: "은금가야",
@@ -57,7 +57,6 @@ export default function() {
 					for(let i=0; i < msg.length; i++) {
 						downstair.push(msg.slice(0, i+1));
 					}
-
 					return [...upstair, ...downstair.reverse()].join('\n');
 				})();
 
