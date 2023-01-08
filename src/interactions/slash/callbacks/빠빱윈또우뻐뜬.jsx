@@ -1,6 +1,6 @@
 import {
 	WebLogger,
-	escapers,
+	escape,
 } from "../../../.modules/tweak_functions";
 import {
 	createElement,
@@ -17,7 +17,7 @@ export default function() {
 	useDescription("popup_window_button");
 	const [popupPassword_id, popupPassword_value] = useInput();
 	const popupWindow_id = useModal(async interaction => {
-		await Logger.log(`<@${interaction.member.user.id}> | 빠빱\\_윈또우\\_뻐뜬 > \`\`${escapers.all(popupPassword_value)}\`\``);
+		await Logger.log(`<@${interaction.member.user.id}> | 빠빱\\_윈또우\\_뻐뜬 > \`\`${escape.all(popupPassword_value)}\`\``);
 		
 		return (
 			<Message ephemeral>
