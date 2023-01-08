@@ -26,10 +26,11 @@ await build({
 	outdir: "dist/",
 	outExtension: {".js": ".mjs"},
 
-	target: "esnext",
 	format: "esm",
+	target: "esnext",
 	
 	bundle: true,
+	treeShaking: true,
 	minifySyntax: true,
 	sourcemap: true,
 

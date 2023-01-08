@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {
 	WebLogger,
-	escapers,
+	escape,
 } from "../../../.modules/tweak_functions";
 import {
 	createElement,
@@ -11,6 +11,14 @@ import {
 	useButton, useModal, useInput,
 } from 'slshx';
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
+const toStairing = (str) => {
+	let result = []; //결과값
+	
+	[...str].forEach((value, index) => {
+		result.push(str.slice(0, index + 1));
+	});
+	return result;
+}
 
 
 
@@ -19,6 +27,9 @@ export default function() {
 	const type = useString("기법", "암호화 기법을 선택하세요", {
 		required: true,
 		choices: [{
+			name: "계금가야",
+			value: "stair"
+		}, {
 			name: "은금가야",
 			value: "shuffle"
 		}, {
@@ -36,14 +47,55 @@ export default function() {
 
 	
 	switch(type){
+		case "stair": {
+			return () => {
+				const result = (() => {
+					let upstair = [], downstair = [];
+					for(let i=0; i < msg.length; i++) {
+						upstair.push(msg.slice(0, i));
+					}
+					for(let i=0; i < msg.length; i++) {
+						downstair.push(msg.slice(0, i+1));
+					}
+
+					return [...upstair, ...downstair.reverse()].join('\n');
+				})();
+
+				return (
+					<Message>
+						{escape.all(result).substr(0, 2000)}
+					</Message>
+				);
+			};
+		};
 		case "shuffle": {
-			return () => <Message>{escapers.all(_.shuffle(msg.repeat(repeat).split('')).join('')).substr(0, 2000)}</Message>;
+			return () => {
+				const result = _.shuffle(msg.repeat(repeat).split('')).join('');
+
+				return (
+					<Message>
+						{escape.all(result).substr(0, 2000)}
+					</Message>
+				);
+			};
 		};
 		case "reverse": {
-			return () => <Message>{escapers.all(msg.repeat(repeat).split('').reverse().join('')).substr(0, 2000)}</Message>;
+			return () => {
+				const result = _.msg.repeat(repeat).split('').reverse().join('');
+
+				return (
+					<Message>
+						{escape.all(result).substr(0, 2000)}
+					</Message>
+				);
+			};
 		};
 		default: {
-			return () => <Message>{type}은(는) 존재하지 않는 타입입니다.</Message>;
+			return () => (
+				<Message>
+					{type}은(는) 존재하지 않는 타입입니다.
+				</Message>
+			);
 		};
 	};
 };

@@ -121,6 +121,16 @@ export class WebLogger {
 
 
 
+export const makeStringStairUpAndDown = (str, length) => {
+	const strLength = str.length;
+	const stairLength = Math.floor((length - strLength) / 2);
+	const stair = ' '.repeat(stairLength);
+	return `${stair}${str}${stair}`;
+};
+
+
+
+
 export const formatMinutes = minutes => {
     const timeUnits = {
         years: 525600,
@@ -153,7 +163,7 @@ export const formatMinutes = minutes => {
 
 
 
-export const escapers = {
+export const escape = {
 	backtick: msg => msg.replace(/(`)/g, "\\$1"),
 	all: msg => msg.replace(/([()\[\]`*_~<>@|])/g, "\\$1")
 };
