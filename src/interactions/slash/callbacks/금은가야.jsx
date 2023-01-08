@@ -11,24 +11,19 @@ import {
 	useButton, useModal, useInput,
 } from 'slshx';
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
-const toStairing = (str) => {
-	let result = []; //결과값
-	
-	[...str].forEach((value, index) => {
-		result.push(str.slice(0, index + 1));
-	});
-	return result;
-}
 
 
 
 export default function() {
-	useDescription("금은가야 암호화 기법을 사용하여 메시지를 변환합니다.");
+	useDescription("금은가야 기술을 사용하여 텍스트를 암호화합니다.");
 	const type = useString("기법", "암호화 기법을 선택하세요", {
 		required: true,
 		choices: [{
-			name: "금금가야",
-			value: "stair"
+			name: "계단가야_계단가야",
+			value: "stair_per_words"
+		}, {
+			name: "계_단_가_야",
+			value: "stair_per_chars"
 		}, {
 			name: "은금가야",
 			value: "shuffle"
@@ -42,21 +37,17 @@ export default function() {
 	});
 	const repeat = useInteger("반복", "반복 횟수를 입력하세요", {
 		required: false,
-		min: 1, max: 100
+		min:2, max:100
 	}) ?? 1;
 
 	
 	switch(type){
-		case "stair": {
+		case "stair_per_char": {
 			return () => {
 				const result = (() => {
 					let upstair = [], downstair = [];
-					for(let i=0; i < msg.length; i++) {
-						upstair.push(msg.slice(0, i));
-					}
-					for(let i=0; i < msg.length; i++) {
-						downstair.push(msg.slice(0, i+1));
-					}
+					_.times(msg.length, i=> upstair.push(msg.repeat(i + 1)));
+					_.times(msg.length, i=> downstair.push(msg.repeat(i)));
 					return [...upstair, ...downstair.reverse()].join('\n');
 				})();
 
@@ -67,6 +58,49 @@ export default function() {
 				);
 			};
 		};
+		case "stair_per_word": {
+			return (interaction) => {
+				if(repeat <= 1) {
+					return (
+						<Message ephemeral>
+							{`<@${interaction.member.user.id}>`}, 이 암호화 기법은 반복 횟수를 지정해야 합니다.
+						</Message>
+					);
+				}
+				const result = (() => {
+					let upstair = [], downstair = [];
+					_.times(repeat, i=> upstair.push(msg.repeat(i + 1)));
+					_.times(repeat, i=> downstair.push(msg.repeat(i)));
+					return [...upstair, ...downstair.reverse()].join('\n');
+				})();
+
+				return (
+					<Message>
+						{escape.all(result).substr(0, 2000)}
+					</Message>
+				);
+			};
+		};
+		/*case "stair_per_char": {
+			return () => {
+				const result = (() => {
+					let upstair = [], downstair = [];
+					_.times(msg.length, (index) => {
+						upstair.push(msg.slice(0, index + 1));
+					});
+					_.times(msg.length, (index) => {
+						downstair.push(msg.slice(0, index));
+					});
+					return [...upstair, ...downstair.reverse()].join('\n');
+				})();
+
+				return (
+					<Message>
+						{escape.all(result).substr(0, 2000)}
+					</Message>
+				);
+			};
+		};*/
 		case "shuffle": {
 			return () => {
 				const result = _.shuffle(msg.repeat(repeat).split('')).join('');

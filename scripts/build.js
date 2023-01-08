@@ -31,7 +31,7 @@ await build({
 	
 	bundle: true,
 	treeShaking: true,
-	minifySyntax: true,
+	minify: true,
 	sourcemap: true,
 
 	jsxFactory: "createElement",
