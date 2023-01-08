@@ -13,10 +13,9 @@ import {
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
 
-
 export default function() {
 	useDescription("금은가야 기술을 사용하여 텍스트를 암호화합니다.");
-	const type = useString("기법", "암호화 기법을 선택하세요", {
+	const argv_type = useString("기법", "암호화 기법을 선택하세요", {
 		required: true,
 		choices: [{
 			name: "계단가야_계단가야",
@@ -32,48 +31,33 @@ export default function() {
 			value: "reverse"
 		}]
 	});
-	const msg = useString("메시지", "암호화할 메시지를 입력하세요", {
+	const argv_msg = useString("메시지", "암호화할 메시지를 입력하세요", {
 		required: true
 	});
-	const repeat = useInteger("반복", "반복 횟수를 입력하세요", {
+	const argv_repeat = useInteger("반복", "반복 횟수를 입력하세요", {
 		required: false,
 		min:2, max:100
 	}) ?? 1;
 
-	
-	switch(type){
-		case "stair_per_char": {
-			return () => {
-				const result = (() => {
-					let upstair = [], downstair = [];
-					_.times(msg.length, i=> upstair.push(msg.repeat(i + 1)));
-					_.times(msg.length, i=> downstair.push(msg.repeat(i)));
-					return [...upstair, ...downstair.reverse()].join('\n');
-				})();
+	const msg = argv_msg.repeat(argv_repeat);
+	switch(argv_type){
+		case "stair_per_words": {
+			const result = (() => {
+				let upstair = [], downstair = [];
+				_.times(argv_repeat, i=> upstair.push(argv_msg.repeat(i + 1)));
+				_.times(argv_repeat, i=> downstair.push(argv_msg.repeat(i)));
+				return [...upstair, ...downstair.reverse()].join('\n');
+			})();
 
-				return (
-					<Message>
-						{escape.all(result).substr(0, 2000)}
-					</Message>
-				);
-			};
-		};
-		case "stair_per_word": {
+
 			return (interaction) => {
-				if(repeat <= 1) {
+				if(argv_repeat <= 1) {
 					return (
 						<Message ephemeral>
 							{`<@${interaction.member.user.id}>`}, 이 암호화 기법은 반복 횟수를 지정해야 합니다.
 						</Message>
 					);
 				}
-				const result = (() => {
-					let upstair = [], downstair = [];
-					_.times(repeat, i=> upstair.push(msg.repeat(i + 1)));
-					_.times(repeat, i=> downstair.push(msg.repeat(i)));
-					return [...upstair, ...downstair.reverse()].join('\n');
-				})();
-
 				return (
 					<Message>
 						{escape.all(result).substr(0, 2000)}
@@ -81,29 +65,24 @@ export default function() {
 				);
 			};
 		};
-		/*case "stair_per_char": {
-			return () => {
-				const result = (() => {
-					let upstair = [], downstair = [];
-					_.times(msg.length, (index) => {
-						upstair.push(msg.slice(0, index + 1));
-					});
-					_.times(msg.length, (index) => {
-						downstair.push(msg.slice(0, index));
-					});
-					return [...upstair, ...downstair.reverse()].join('\n');
-				})();
+		case "stair_per_chars": {
+			const result = (() => {
+				let upstair = [], downstair = [];
+				_.times(msg.length, i=> upstair.push(msg.slice(0, i+1)));
+				_.times(msg.length, i=> downstair.push(msg.slice(0, i)));
+				return [...upstair, ...downstair.reverse()].join('\n');
+			})();
 
-				return (
-					<Message>
-						{escape.all(result).substr(0, 2000)}
-					</Message>
-				);
-			};
-		};*/
+
+			return () => (
+				<Message>
+					{escape.all(result).substr(0, 2000)}
+				</Message>
+			);
+		};
 		case "shuffle": {
 			return () => {
-				const result = _.shuffle(msg.repeat(repeat).split('')).join('');
+				const result = _.shuffle(msg.split('')).join('');
 
 				return (
 					<Message>
@@ -114,7 +93,7 @@ export default function() {
 		};
 		case "reverse": {
 			return () => {
-				const result = _.msg.repeat(repeat).split('').reverse().join('');
+				const result = msg.split('').reverse().join('');
 
 				return (
 					<Message>
@@ -124,11 +103,7 @@ export default function() {
 			};
 		};
 		default: {
-			return () => (
-				<Message>
-					{type}은(는) 존재하지 않는 타입입니다.
-				</Message>
-			);
+			throw new TypeError(`${argv_type}은(는) 존재하지 않는 타입입니다.`);
 		};
 	};
 };
