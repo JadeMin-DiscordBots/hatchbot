@@ -1,19 +1,20 @@
 {
 	"private": true,
-	"name": "sayhi-bot",
-	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
 		"log": "wrangler tail --format pretty",
 		"log:json": "wrangler tail --format json",
+
 		"publish": "wrangler publish && echo ✅ - 프로덕션용 서버가 Cloudflare Workers에 업로드되었습니다!\n",
 		"publish:log": "npm run publish && npm run log",
 		"publish:log-json": "npm run publish && npm run log:json",
 		"publish:local": "wrangler dev -l",
+
 		"deploy": "node --no-warnings --experimental-vm-modules ./scripts/deploy.js && npm run publish",
 		"deploy:log": "npm run deploy && npm run log",
-		"build:publish": "node --trace-uncaught --no-warnings --experimental-vm-modules ./scripts/build.js publish",
-		"build:deploy": "node --trace-uncaught --no-warnings --experimental-vm-modules ./scripts/build.js deploy"
+
+		"build:publish": "node --no-warnings --experimental-vm-modules ./scripts/build.js publish",
+		"build:deploy": "node --no-warnings --experimental-vm-modules ./scripts/build.js deploy"
 	},
 	"dependencies": {
 		"itty-router": "^3.0.10",

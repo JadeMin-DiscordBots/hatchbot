@@ -14,7 +14,7 @@ const options = {
 	messageCommands,
 	auth: {
 		scopes: ["bot", "applications.commands"],
-		permissions: 8
+		permissions: 3072
 	}
 };
 const handler = {
@@ -27,16 +27,16 @@ const handler = {
 
 if(env.IS_DEPLOY_MODE) {
 	Router.post('/deploy', async (request) => {
-		if(request.query['secret'] === options.applicationSecret) {
-			try {
-				await handler.deployCommands(options);
-				return new Response("Successfully Deployed", {status: 200});
-			} catch(error){
-				console.error(error);
-				return new Response("Deploy Error", {status: 500});
-			}
-		} else {
+		if(request.headers.get('Authorization') !== options.applicationSecret) {
 			return new Response("Unauthorized", {status: 401});
+		}
+
+		try {
+			await handler.deployCommands(options);
+			return new Response("Successfully Deployed", {status: 200});
+		} catch(error){
+			console.error(error);
+			return new Response("Error", {status: 500});
 		}
 	});
 } else {
@@ -47,6 +47,7 @@ if(env.IS_DEPLOY_MODE) {
 			return await handler.onExceptions(error);
 		}
 	});
+
 	Router.get('/invite', () => {
 		const inviteUrl = new URL("https://discord.com/api/oauth2/authorize");
 		inviteUrl.searchParams.set('client_id', options.applicationId);

@@ -31,8 +31,8 @@ await build({
 	
 	bundle: true,
 	treeShaking: true,
-	minify: true,
-	sourcemap: true,
+	minifyWhitespace: true,
+	sourcemap: true, // 'inline' also not works
 
 	jsxFactory: "createElement",
 	jsxFragment: "Fragment",

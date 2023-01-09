@@ -3,6 +3,7 @@ import 급식표 from "./callbacks/급식표";
 import 시간표 from "./callbacks/시간표";
 import 맵 from "./callbacks/맵";
 import 금은가야 from "./callbacks/금은가야";
+import 계단가야 from "./callbacks/계단가야";
 import 도움말 from "./callbacks/도움말";
 
 
@@ -12,5 +13,6 @@ export default {
 	시간표,
 	맵,
 	금은가야,
+	계단가야,
 	도움말
 };

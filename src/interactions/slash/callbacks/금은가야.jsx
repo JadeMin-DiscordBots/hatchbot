@@ -13,17 +13,12 @@ import {
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
 
+
 export default function() {
 	useDescription("금은가야 기술을 사용하여 텍스트를 암호화합니다.");
 	const argv_type = useString("기법", "암호화 기법을 선택하세요", {
 		required: true,
 		choices: [{
-			name: "계단가야_계단가야",
-			value: "stair_per_words"
-		}, {
-			name: "계_단_가_야",
-			value: "stair_per_chars"
-		}, {
 			name: "은금가야",
 			value: "shuffle"
 		}, {
@@ -31,76 +26,58 @@ export default function() {
 			value: "reverse"
 		}]
 	});
-	const argv_msg = useString("메시지", "암호화할 메시지를 입력하세요", {
-		required: true
-	});
 	const argv_repeat = useInteger("반복", "반복 횟수를 입력하세요", {
 		required: false,
 		min:2, max:100
 	}) ?? 1;
 
-	const msg = argv_msg.repeat(argv_repeat);
+
+	const [input_id, input_value] = useInput();
+	const msg = input_value.repeat(argv_repeat);
+	const shuffleModal_id = useModal(() => {
+		const result = _.shuffle(msg.split('')).join('');
+		return (
+			<Message>
+				{escape.all(result).substr(0, 2000)}
+			</Message>
+		);
+	});
+	const reverseModal_id = useModal(() => {
+		const result = msg.split('').reverse().join('');
+		return (
+			<Message>
+				{escape.all(result).substr(0, 2000)}
+			</Message>
+		);
+	});
 	switch(argv_type){
-		case "stair_per_words": {
-			const result = (() => {
-				let upstair = [], downstair = [];
-				_.times(argv_repeat, i=> upstair.push(argv_msg.repeat(i + 1)));
-				_.times(argv_repeat, i=> downstair.push(argv_msg.repeat(i)));
-				return [...upstair, ...downstair.reverse()].join('\n');
-			})();
-
-
-			return (interaction) => {
-				if(argv_repeat <= 1) {
-					return (
-						<Message ephemeral>
-							{`<@${interaction.member.user.id}>`}, 이 암호화 기법은 반복 횟수를 지정해야 합니다.
-						</Message>
-					);
-				}
-				return (
-					<Message>
-						{escape.all(result).substr(0, 2000)}
-					</Message>
-				);
-			};
-		};
-		case "stair_per_chars": {
-			const result = (() => {
-				let upstair = [], downstair = [];
-				_.times(msg.length, i=> upstair.push(msg.slice(0, i+1)));
-				_.times(msg.length, i=> downstair.push(msg.slice(0, i)));
-				return [...upstair, ...downstair.reverse()].join('\n');
-			})();
-
-
+		case "shuffle": {
 			return () => (
-				<Message>
-					{escape.all(result).substr(0, 2000)}
-				</Message>
+				<Modal id={shuffleModal_id} title="은끔까야_윈또우_뻐뜬">
+					<Input
+						id={input_id}
+						label="몌씨찌 냬용"
+						required
+						paragraph
+						minLength={2}
+						maxLength={50}
+					/>
+				</Modal>
 			);
 		};
-		case "shuffle": {
-			return () => {
-				const result = _.shuffle(msg.split('')).join('');
-
-				return (
-					<Message>
-						{escape.all(result).substr(0, 2000)}
-					</Message>
-				);
-			};
-		};
 		case "reverse": {
-			return () => {
-				const result = msg.split('').reverse().join('');
-
-				return (
-					<Message>
-						{escape.all(result).substr(0, 2000)}
-					</Message>
-				);
-			};
+			return () => (
+				<Modal id={reverseModal_id} title="야까은끔_윈또우_뻐뜬">
+					<Input
+						id={input_id}
+						label="몌씨찌 냬용"
+						required
+						paragraph
+						minLength={2}
+						maxLength={50}
+					/>
+				</Modal>
+			);
 		};
 		default: {
 			throw new TypeError(`${argv_type}은(는) 존재하지 않는 타입입니다.`);
