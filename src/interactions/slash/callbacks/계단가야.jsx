@@ -40,10 +40,9 @@ export default function() {
 		case "per_words": {
 			return (interaction) => {
 				const result = (() => {
-					let upstair = [], downstair = [];
-					_.times(argv_repeat, i=> upstair.push(argv_msg.repeat(i + 1)));
-					_.times(argv_repeat, i=> downstair.push(argv_msg.repeat(i)));
-					return [...upstair, ...downstair.reverse()].join('\n');
+					const upstair = _.range(argv_repeat).map(i=> argv_msg.repeat(i + 1));
+					const downstair = _.range(argv_repeat).map(i=> argv_msg.repeat(i)).reverse();
+					return [...upstair, ...downstair].join('\n');
 				})();
 
 				return (
@@ -61,10 +60,9 @@ export default function() {
 			return () => {
 				const repeatedMsg = argv_msg.repeat(argv_repeat);
 				const result = (() => {
-					let upstair = [], downstair = [];
-					_.times(repeatedMsg.length, i=> upstair.push(repeatedMsg.slice(0, i+1)));
-					_.times(repeatedMsg.length, i=> downstair.push(repeatedMsg.slice(0, i)));
-					return [...upstair, ...downstair.reverse()].join('\n');
+					const upstair = _.range(repeatedMsg.length).map(i=> repeatedMsg.slice(0, i+1));
+					const downstair = _.range(repeatedMsg.length).map(i=> repeatedMsg.slice(0, i)).reverse();
+					return [...upstair, ...downstair].join('\n');
 				})();
 
 				return (

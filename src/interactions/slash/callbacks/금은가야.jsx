@@ -13,7 +13,6 @@ import {
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
 
-
 export default function() {
 	useDescription("금은가야 기술을 사용하여 텍스트를 암호화합니다.");
 	const argv_type = useString("기법", "암호화 기법을 선택하세요", {

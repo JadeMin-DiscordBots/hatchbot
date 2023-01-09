@@ -14,7 +14,7 @@ import {
 } from 'slshx';
 import AutoComplete from "./components/AutoComplete";
 import Meal from "./components/급식";
-luxonSetup(Settings);
+luxonSetup(Settings)
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);
 
