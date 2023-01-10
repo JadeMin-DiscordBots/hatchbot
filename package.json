@@ -4,15 +4,12 @@
 	"scripts": {
 		"log": "wrangler tail --format pretty",
 		"log:json": "wrangler tail --format json",
-
 		"publish": "wrangler publish && echo ✅ - 프로덕션용 서버가 Cloudflare Workers에 업로드되었습니다!\n",
 		"publish:log": "npm run publish && npm run log",
 		"publish:log-json": "npm run publish && npm run log:json",
 		"publish:local": "wrangler dev -l",
-
 		"deploy": "node --no-warnings --experimental-vm-modules ./scripts/deploy.js && npm run publish",
 		"deploy:log": "npm run deploy && npm run log",
-
 		"build:publish": "node --no-warnings --experimental-vm-modules ./scripts/build.js publish",
 		"build:deploy": "node --no-warnings --experimental-vm-modules ./scripts/build.js deploy"
 	},
@@ -20,7 +17,8 @@
 		"itty-router": "^3.0.10",
 		"lodash": "^4.17.21",
 		"luxon": "^3.1.1",
-		"slshx": "^0.3.0"
+		"slshx": "^0.3.0",
+		"stacktrace-js": "^2.0.2"
 	},
 	"devDependencies": {
 		"esbuild": "^0.16.10",

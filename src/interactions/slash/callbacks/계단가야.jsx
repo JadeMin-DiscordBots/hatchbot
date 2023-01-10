@@ -58,8 +58,8 @@ export default function() {
 		};
 		case "per_chars": {
 			return () => {
-				const repeatedMsg = argv_msg.repeat(argv_repeat);
 				const result = (() => {
+					const repeatedMsg = argv_msg.repeat(argv_repeat);
 					const upstair = _.range(repeatedMsg.length).map(i=> repeatedMsg.slice(0, i+1));
 					const downstair = _.range(repeatedMsg.length).map(i=> repeatedMsg.slice(0, i)).reverse();
 					return [...upstair, ...downstair].join('\n');

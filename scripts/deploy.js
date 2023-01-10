@@ -16,7 +16,7 @@ const localWorker = new Miniflare({
 
 	modules: true,
 	buildCommand: "npm run build:deploy",
-	scriptPath: "./dist/server.mjs",
+	scriptPath: "dist/server.mjs",
 });
 const response = await localWorker.dispatchFetch(`http://localhost:8787/deploy`, {
 	method: 'POST',

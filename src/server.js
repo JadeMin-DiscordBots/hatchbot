@@ -1,65 +1,40 @@
 import { Router as IttyRouter } from 'itty-router';
-import {
-	createHandler,
-	deployCommands
-} from 'slshx';
-import { commands, userCommands, messageCommands, onExceptions } from "./interaction";
+import { createHandler } from 'slshx';
+import onError from "./.modules/catch500";
+import interactions from "./interactions/all";
 const Router = IttyRouter();
 const options = {
 	applicationId: env.APPLICATION_ID,
 	applicationPublicKey: env.PUBLIC_KEY,
-	applicationSecret: env.SECRET_KEY,
-	commands,
-	userCommands,
-	messageCommands,
+	...interactions,
+
 	auth: {
 		scopes: ["bot", "applications.commands"],
 		permissions: 3072
 	}
 };
-const handler = {
-	interactions: createHandler(options),
-	onExceptions: onExceptions,
-	deployCommands: deployCommands
-};
 
 
 
-if(env.IS_DEPLOY_MODE) {
-	Router.post('/deploy', async (request) => {
-		if(request.headers.get('Authorization') !== options.applicationSecret) {
-			return new Response("Unauthorized", {status: 401});
-		}
-
-		try {
-			await handler.deployCommands(options);
-			return new Response("Successfully Deployed", {status: 200});
-		} catch(error){
-			console.error(error);
-			return new Response("Error", {status: 500});
-		}
-	});
-} else {
-	Router.post('/interaction', async (request, workerSecret, workerContext) => {
-		try {
-			return await handler.interactions(request, workerSecret, workerContext);
-		} catch(error) {
-			return await handler.onExceptions(error);
-		}
-	});
-
-	Router.get('/invite', () => {
-		const inviteUrl = new URL("https://discord.com/api/oauth2/authorize");
-		inviteUrl.searchParams.set('client_id', options.applicationId);
-		inviteUrl.searchParams.set('scope', options.auth.scopes.join(' '));
-		inviteUrl.searchParams.set('permissions', options.auth.permissions);
-		
-		return Response.redirect(inviteUrl.toString(), 302);
-	});
-}
-Router.all('*', () => {
-	return new Response("No bitches lol", {status: 404});
+Router.post('/interaction', async (request, workerSecret, workerContext) => {
+	try {
+		return await createHandler(options)(request, workerSecret, workerContext);
+	} catch(error) {
+		return await onError(error);
+	}
 });
+Router.get('/invite', () => {
+	const inviteUrl = new URL("https://discord.com/api/oauth2/authorize");
+	inviteUrl.searchParams.set('client_id', options.applicationId);
+	inviteUrl.searchParams.set('scope', options.auth.scopes.join(' '));
+	inviteUrl.searchParams.set('permissions', options.auth.permissions);
+	
+	return Response.redirect(inviteUrl.toString(), 302);
+});
+Router.all('*', () => {
+	return new Response("no bitches lol", {status: 404});
+});
+
 
 export default {
 	async fetch(request, workerSecret, workerContext) {
