@@ -2,7 +2,7 @@ import _ from 'lodash';
 import {
 	WebLogger,
 	formatMinutes
-} from "../../../.modules/tweak_functions";
+} from "../../.modules/tweak_functions";
 import {
 	createElement,
 	useDescription,
@@ -10,8 +10,6 @@ import {
 	Fragment, Message, Embed, Field, Modal, Button, Input, Row,
 	useButton, useModal, useInput,
 } from 'slshx';
-
-
 
 export default function() {
 	useDescription("사용 가능한 모든 명령어와 사용법을 확인합니다.");

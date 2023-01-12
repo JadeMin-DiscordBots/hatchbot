@@ -2,7 +2,7 @@ import _ from 'lodash';
 import {
 	WebLogger,
 	escape,
-} from "../../../.modules/tweak_functions";
+} from "../../.modules/tweak_functions";
 import {
 	createElement,
 	useDescription,
@@ -11,7 +11,6 @@ import {
 	useButton, useModal, useInput,
 } from 'slshx';
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
-
 
 export default function() {
 	useDescription("금은가야 기술을 사용하여 텍스트를 암호화합니다.");
@@ -32,22 +31,14 @@ export default function() {
 
 
 	const [input_id, input_value] = useInput();
-	const msg = input_value.repeat(argv_repeat);
+	const msg = input_value.trim().repeat(argv_repeat);
 	const shuffleModal_id = useModal(() => {
 		const result = _.shuffle(msg.split('')).join('');
-		return (
-			<Message>
-				{escape.all(result).substr(0, 2000)}
-			</Message>
-		);
+		return <Message>{escape.all(result).substr(0, 2000)}</Message>;
 	});
 	const reverseModal_id = useModal(() => {
 		const result = msg.split('').reverse().join('');
-		return (
-			<Message>
-				{escape.all(result).substr(0, 2000)}
-			</Message>
-		);
+		return <Message>{escape.all(result).substr(0, 2000)}</Message>;
 	});
 	switch(argv_type){
 		case "shuffle": {

@@ -2,7 +2,7 @@ import {
 	WebLogger,
 	ALS_API,
 	formatMinutes
-} from "../../../.modules/tweak_functions";
+} from "../../.modules/tweak_functions";
 import {
 	createElement,
 	useDescription,
@@ -12,8 +12,6 @@ import {
 } from 'slshx';
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const ALS = new ALS_API(env.ALS_TOKEN);
-
-
 
 export default function() {
 	useDescription("에이펙스 레전드의 맵 로테이션 정보를 확인합니다.");

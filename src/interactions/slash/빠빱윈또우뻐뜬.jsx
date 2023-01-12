@@ -1,7 +1,7 @@
 import {
 	WebLogger,
 	escape,
-} from "../../../.modules/tweak_functions";
+} from "../../.modules/tweak_functions";
 import {
 	createElement,
 	useDescription,
@@ -10,8 +10,6 @@ import {
 	useButton, useModal, useInput,
 } from 'slshx';
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
-
-
 
 export default function() {
 	useDescription("popup_window_button");

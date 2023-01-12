@@ -1,6 +1,6 @@
 import { Router as IttyRouter } from 'itty-router';
 import { deployCommands } from 'slshx';
-import onError from "./.modules/ctach500";
+import onError from "./.modules/catch500";
 import interactions from "./interactions/all";
 const Router = IttyRouter();
 const options = {

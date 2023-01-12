@@ -2,7 +2,7 @@ import _ from 'lodash';
 import {
 	WebLogger,
 	escape,
-} from "../../../.modules/tweak_functions";
+} from "../../.modules/tweak_functions";
 import {
 	createElement,
 	useDescription,
@@ -11,8 +11,6 @@ import {
 	useButton, useModal, useInput,
 } from 'slshx';
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
-
-
 
 export default function() {
 	useDescription("텍스트를 아름답게 데코레이션합니다.");
@@ -45,15 +43,19 @@ export default function() {
 					return [...upstair, ...downstair].join('\n');
 				})();
 
-				return (
-					<Message>
-						{argv_repeat <= 2?
-							`<@${interaction.member.user.id}>, 해당 기법은 반복 횟수를 지정해야 합니다.`
-							:
-							escape.all(result).substr(0, 2000)
-						}
-					</Message>
-				);
+				if(argv_repeat <= 2) {
+					return (
+						<Message ephemeral>
+							{`<@${interaction.member.user.id}>, 해당 기법은 반복 횟수를 지정해야 합니다.`}
+						</Message>
+					);
+				} else {
+					return (
+						<Message>
+							{escape.all(result).substr(0, 2000)}
+						</Message>
+					);
+				}
 			};
 		};
 		case "per_chars": {

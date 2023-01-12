@@ -7,12 +7,12 @@ import {
 import {
 	WebLogger,
 	escape
-} from "../../../../.modules/tweak_functions";
+} from "../../../.modules/tweak_functions";
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
 
 export default {
-	"니얼굴": () =>{
+	"응원이야": () =>{
 		return async (interaction, cfg, ctx, targetUser) => {
 			if(targetUser.id === "840594543291269120") {
 				return (

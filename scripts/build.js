@@ -1,6 +1,8 @@
-import { build } from 'esbuild';
+import ESBuild from 'esbuild';
+import PluginGlobImport from 'esbuild-plugin-import-glob';
 import env from "../secrets.json" assert {type: 'json'};
-const isDeployMode = process.argv.slice(2)[0] === 'deploy';
+const argv = process.argv.slice(2)[0];
+const isDeployMode = argv === 'deploy';
 
 
 const define = {
@@ -16,21 +18,26 @@ const define = {
 	"env.ALS_TOKEN": JSON.stringify(env["ALS_TOKEN"]),
 	"env.NEIS_TOKEN": JSON.stringify(env["NEIS_TOKEN"]),
 };
-await build({
-	entryPoints: [`src/${isDeployMode? 'deployServer':'server'}.js`],
+await ESBuild.build({
+	entryPoints: [`src/${isDeployMode? 'deploy':'server'}.js`],
 	outfile: "dist/server.mjs",
-	outExtension: {".js": ".mjs"},
 
-	format: "esm",
-	target: "esnext",
+	platform: 'neutral',
+	format: 'esm',
+	target: 'esnext',
 	
 	bundle: true,
 	treeShaking: true,
-	minifySyntax: true,
-	sourcemap: 'inline', // 'inline' also not works
+	minify: true,
+	sourcemap: true,
+	legalComments: 'none',
 
 	jsxFactory: "createElement",
 	jsxFragment: "Fragment",
+
+	plugins: [
+		PluginGlobImport.default()
+	],
 
 	define
 });
