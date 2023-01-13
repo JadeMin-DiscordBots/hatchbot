@@ -10,7 +10,6 @@ import {
 } from "../../../.modules/tweak_functions";
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
-
 export default {
 	"응원이야": () =>{
 		return async (interaction, cfg, ctx, targetUser) => {

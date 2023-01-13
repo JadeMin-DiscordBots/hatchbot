@@ -28,7 +28,7 @@ await ESBuild.build({
 	
 	bundle: true,
 	treeShaking: true,
-	minify: true,
+	minifyWhitespace: true,
 	sourcemap: true,
 	legalComments: 'none',
 

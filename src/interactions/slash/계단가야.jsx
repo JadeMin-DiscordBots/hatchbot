@@ -43,10 +43,11 @@ export default function() {
 					return [...upstair, ...downstair].join('\n');
 				})();
 
-				if(argv_repeat <= 2) {
+				if(argv_repeat <= 1) {
 					return (
 						<Message ephemeral>
-							{`<@${interaction.member.user.id}>, 해당 기법은 반복 횟수를 지정해야 합니다.`}
+							{/*`<@${interaction.member.user.id}>, 해당 기법은 반복 횟수를 지정해야 합니다.`*/}
+							해당 기법은 반복 횟수를 지정해야 합니다.
 						</Message>
 					);
 				} else {

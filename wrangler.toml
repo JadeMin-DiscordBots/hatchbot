@@ -12,7 +12,7 @@ route = { zone_name="klartnet.ml", pattern="hatch-bot.discord.klartnet.ml", cust
 
 
 [build]
-command = "node --no-warnings ./scripts/build.js publish"
+command = "npm run build:publish"
 
 
 [miniflare]

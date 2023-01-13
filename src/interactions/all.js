@@ -22,7 +22,7 @@ ctxmMessage.forEach(callback => {
 	pushCommands(callback, 'messageCommands');
 });
 slash_commands.default.forEach((callback, index) => {
-	const commandName = slash_commands.filenames[index].replace(/.*\/([가-힣a-z]*)\.jsx$/gi, '$1');
+	const commandName = slash_commands.filenames[index].replace(/.*\/(.*)\.jsx$/gi, '$1');
 	result.commands[commandName] = callback.default;
 });
 
