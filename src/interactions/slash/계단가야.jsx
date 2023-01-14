@@ -36,26 +36,17 @@ export default function() {
 
 	switch(argv_type){
 		case "per_words": {
-			return (interaction) => {
+			return () => {
 				const result = (() => {
 					const upstair = _.range(argv_repeat).map(i=> argv_msg.repeat(i + 1));
-					const downstair = _.range(argv_repeat).map(i=> argv_msg.repeat(i)).reverse();
-					return [...upstair, ...downstair].join('\n');
+					const downstair = _.range(argv_repeat).map(i=> argv_msg.repeat(i));
+					return [...upstair, ...downstair.reverse()].join('\n');
 				})();
 
 				if(argv_repeat <= 1) {
-					return (
-						<Message ephemeral>
-							{/*`<@${interaction.member.user.id}>, 해당 기법은 반복 횟수를 지정해야 합니다.`*/}
-							해당 기법은 반복 횟수를 지정해야 합니다.
-						</Message>
-					);
+					return <Message ephemeral>해당 기법은 반복 횟수를 지정해야 합니다.</Message>;
 				} else {
-					return (
-						<Message>
-							{escape.all(result).substr(0, 2000)}
-						</Message>
-					);
+					return <Message>{escape.all(result).substring(0, 1999)}</Message>;
 				}
 			};
 		};
@@ -64,15 +55,11 @@ export default function() {
 				const result = (() => {
 					const repeatedMsg = argv_msg.repeat(argv_repeat);
 					const upstair = _.range(repeatedMsg.length).map(i=> repeatedMsg.slice(0, i+1));
-					const downstair = _.range(repeatedMsg.length).map(i=> repeatedMsg.slice(0, i)).reverse();
-					return [...upstair, ...downstair].join('\n');
+					const downstair = _.range(repeatedMsg.length).map(i=> repeatedMsg.slice(0, i));
+					return [...upstair, ...downstair.reverse()].join('\n');
 				})();
 
-				return (
-					<Message>
-						{escape.all(result).substr(0, 2000)}
-					</Message>
-				);
+				return <Message>{escape.all(result).substring(0, 1999)}</Message>;
 			};
 		};
 		default: {

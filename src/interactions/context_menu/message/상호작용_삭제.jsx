@@ -3,11 +3,8 @@ import {
 	useDescription,
 	Fragment, Message, Embed, Field, Modal, Button, Input, Row,
 	useButton, useModal, useInput,
-	$update,
 } from 'slshx';
 import {
-	deleteOriginalInteractionResponse,
-	createFollowupMessage,
 	deleteFollowupMessage,
 } from 'slshx';
 import {

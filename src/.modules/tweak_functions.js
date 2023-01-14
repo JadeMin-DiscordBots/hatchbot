@@ -130,7 +130,9 @@ export class WebLogger {
 	 * @private 클래스 내부에서만 사용됩니다.
 	 */
 	#toStringForce(text) {
-		if(text?.constructor === Object) return JSON.stringify(text, null, '\t');
+		const stringify = text=> JSON.stringify(text, null, '\t');
+		if(text?.constructor === Object) return stringify(text);
+		if(text?.constructor !== String) return stringify(text);
 		return text;
 	};
 
