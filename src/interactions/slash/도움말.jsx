@@ -11,7 +11,7 @@ import {
 	useButton, useModal, useInput,
 } from 'slshx';
 
-export default function() {
+export default () => {
 	useDescription("사용 가능한 모든 명령어와 사용법을 확인합니다.");
 	const cmdName = useString("명령어", "원하는 명령어의 이름을 입력합니다.", {
 		required: false,

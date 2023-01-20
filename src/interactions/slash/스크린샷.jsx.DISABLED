@@ -1,0 +1,59 @@
+import {
+	WebLogger,
+	SSHOT_API
+} from "../../.modules/tweak_functions";
+import {
+	createElement,
+	useDescription,
+	useString, useNumber, useInteger, useBoolean,
+	Fragment, Message, Embed, Field, Modal, Button, Input, Row,
+	useButton, useModal, useInput,
+} from 'slshx';
+const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
+const SSHOT = new SSHOT_API(env.SCREENSHOT_TOKEN);
+
+export default () => {
+	useDescription("특정 사이트의 스크린샷을 찍습니다. (관리자 전용)");
+	const [urlInput_id, urlInput_value] = useInput();
+	const [msgInput_id, msgInput_value] = useInput();
+	const panelModal_id = useModal(async function*() {
+		yield;
+		const api = await SSHOT.screenshot(urlInput_value);
+
+		if(!api.error) {
+			return (
+				<Message attachments={[api.data]}>
+					{msgInput_value}
+				</Message>
+			);
+		} else {
+			return (
+				<Message ephemeral>
+					```{`${api.data.message}\n${api.data.description}`}```
+				</Message>
+			);
+		}
+	});
+	
+
+	return (interaction) => {
+		if(interaction.member.user.id !== "840594543291269120") return (
+			<Message ephemeral>관리자 전용 명령어입니다.</Message>
+		);
+
+		return (
+			<Modal id={panelModal_id} title="스크린샷 찍기">
+				<Input
+					id={urlInput_id}
+					label="스크린샷을 찍을 사이트 주소를 입력해주세요."
+					required
+				/>
+				<Input
+					id={msgInput_id}
+					label="스크린샷과 함께 보낼 메시지를 입력해주세요."
+					paragraph
+				/>
+			</Modal>
+		);
+	};
+};

@@ -17,7 +17,7 @@ luxonSetup(Settings);
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);
 
-export default function() {
+export default () => {
 	useDescription("시간표를 확인합니다.");
 	const GRADE = useInteger("학년", "학년을 입력해주세요.", {
 		required: true,

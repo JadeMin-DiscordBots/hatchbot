@@ -12,7 +12,7 @@ import {
 } from 'slshx';
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
-export default function() {
+export default () => {
 	useDescription("텍스트를 아름답게 데코레이션합니다.");
 	const argv_type = useString("기법", "데코 기법을 선택하세요", {
 		required: true,

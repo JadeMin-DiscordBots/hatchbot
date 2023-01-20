@@ -108,6 +108,49 @@ export class NEIS_API {
 		};
 	};
 };
+export class SSHOT_API {
+	/**
+	 * @param {String} token Screenshot API 인증 키
+	 * @returns {undefined}
+	 */
+	constructor(token){
+		this.token = token;
+	};
+	
+	/**
+	 * NEIS API에 데이터를 요청합니다.
+	 * 
+	 * @param {String} url 스크린샷을 찍을 웹사이트 주소
+	 * @returns {Promise<{file: File}>} 데이터
+	 * @async
+	 */
+	async screenshot(url){
+		const response = await fetch(`https://kmemsnefy547lttm5vwbqem7ga0vimgu.lambda-url.ap-northeast-2.on.aws/`, {
+			method: 'POST',
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify({
+				auth: this.token,
+				url: url
+			})
+		});
+		const data = await response.json();
+		const buffer = new ArrayBuffer(data.data.length);
+		const view = new Uint8Array(buffer);
+		for(let i=0; i<data.data.length; ++i) view[i] = data.data[i];
+
+		if(response.status === 200) {
+			return {
+				error: false,
+				data: new File([buffer], "screenshot.png", {type: 'image/png'})
+			};
+		} else {
+			return {
+				error: true,
+				data: data
+			};
+		}
+	};
+};
 
 
 
@@ -129,11 +172,10 @@ export class WebLogger {
 	 * @returns {String} 변환된 값
 	 * @private 클래스 내부에서만 사용됩니다.
 	 */
-	#toStringForce(text) {
+	#toString(text) {
 		const stringify = text=> JSON.stringify(text, null, '\t');
-		if(text?.constructor === Object) return stringify(text);
-		if(text?.constructor !== String) return stringify(text);
-		return text;
+		if(typeof text === String) return text;
+		return stringify(text);
 	};
 
 	/**
@@ -165,17 +207,11 @@ export class WebLogger {
 	 * @async
 	 */
 	async log(message, options) {
-		if(message?.constructor !== Object) {
-			if(options?.constructor === Object) {
-				message = message.replace(/\$code/i, `\`\`\`${options.language}\n${options.code}\`\`\``).replace(/\\\\/g, '\\');
-			}
-			console.log(message);
-			await this.send({
-				content: message.substring(0, 1999)
-			});
-		} else {
-			console.log(message);
-			const stringifiedMsg = this.#toStringForce(message);
+		console.log(message);
+
+		if(message.constructor === Object) {
+			const stringifiedMsg = this.#toString(message);
+
 			if(stringifiedMsg.length > 2000) {
 				const warnMsg = "\n로그 메시지가 2000자를 초과하여 일부 내용이 누락되었습니다.\n[CloudFlare Workers](https://dash.cloudflare.com/?to=/:account/workers/overview)에서 전체 로그를 확인하세요.";
 				await this.send({
@@ -184,6 +220,16 @@ export class WebLogger {
 			} else {
 				await this.send({
 					content: `\`\`\`json\n${stringifiedMsg.substring(0, 1994)}\`\`\``
+				});
+			}
+		} else {
+			if(options?.constructor === Object) {
+				await this.send({
+					content: message.toString().replace(/\$code/i, `\`\`\`${options.language}\n${options.code}\`\`\``).replace(/\\\\/g, '\\')
+				});
+			} else {
+				await this.send({
+					content: message.toString().substring(0, 1999)
 				});
 			}
 		}

@@ -11,7 +11,7 @@ import {
 } from 'slshx';
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
-export default function() {
+export default () => {
 	useDescription("popup_window_button");
 	const [popupPassword_id, popupPassword_value] = useInput();
 	const popupWindow_id = useModal(async interaction => {

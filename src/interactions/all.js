@@ -1,29 +1,29 @@
 import ctxmMessage from "./context_menu/message/*.jsx";
 import ctxmUser from "./context_menu/user/*.jsx";
 const slash_commands = require(`./slash/*.jsx`);
-let result = {
-	commands: {},
+let exports = {
 	userCommands: {},
-	messageCommands: {}
+	messageCommands: {},
+	commands: {}
 };
-const pushCommands = (callback, propName) => {
+const pushCommands = (cmdCallback, propName) => {
 	const [key, value] = [
-		Object.keys(callback.default)[0],
-		Object.values(callback.default)[0]
+		Object.keys(cmdCallback.default)[0],
+		Object.values(cmdCallback.default)[0]
 	];
-	result[propName][key] = value;
+	exports[propName][key] = value;
 };
 
 
-ctxmUser.forEach(callback => {
-	pushCommands(callback, 'userCommands');
+ctxmUser.forEach(cmdCallback => {
+	pushCommands(cmdCallback, 'userCommands');
 });
-ctxmMessage.forEach(callback => {
-	pushCommands(callback, 'messageCommands');
+ctxmMessage.forEach(cmdCallback => {
+	pushCommands(cmdCallback, 'messageCommands');
 });
-slash_commands.default.forEach((callback, index) => {
+slash_commands.default.forEach((cmdCallback, index) => {
 	const commandName = slash_commands.filenames[index].replace(/.*\/(.*)\.jsx$/gi, '$1');
-	result.commands[commandName] = callback.default;
+	exports.commands[commandName] = cmdCallback.default;
 });
 
-export default result;
+export default exports;

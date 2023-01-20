@@ -18,7 +18,7 @@ luxonSetup(Settings)
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);
 
-export default function() {
+export default () => {
 	useDescription("급식표를 확인합니다.");
 	const DAY = useString("날짜", "날짜를 입력해주세요.", {
 		required: false,

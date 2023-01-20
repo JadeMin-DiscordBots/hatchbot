@@ -18,8 +18,8 @@ Router.post('/deploy', async (request) => {
 	await deployCommands(options);
 	return new Response("Successfully Deployed", {status: 200});
 });
-Router.post('/*', async (request) => {
-	return new Response("no bitches lol\ndid you mean to send a request to \"/server\"?", {status: 404});
+Router.post('*', async (request) => {
+	return new Response("Did you mean to send a request to \"/server\"?", {status: 404});
 });
 
 export default {

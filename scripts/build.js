@@ -17,18 +17,18 @@ const define = {
 
 	"env.ALS_TOKEN": JSON.stringify(env["ALS_TOKEN"]),
 	"env.NEIS_TOKEN": JSON.stringify(env["NEIS_TOKEN"]),
+	"env.SCREENSHOT_TOKEN": JSON.stringify(env["SCREENSHOT_TOKEN"]),
 };
 await ESBuild.build({
 	entryPoints: [`src/${isDeployMode? 'deploy':'server'}.js`],
 	outfile: "dist/server.mjs",
 
-	platform: 'neutral',
 	format: 'esm',
 	target: 'esnext',
 	
 	bundle: true,
 	treeShaking: true,
-	minifyWhitespace: true,
+	minify: true,
 	sourcemap: true,
 	legalComments: 'none',
 

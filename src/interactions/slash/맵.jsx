@@ -13,7 +13,7 @@ import {
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const ALS = new ALS_API(env.ALS_TOKEN);
 
-export default function() {
+export default () => {
 	useDescription("에이펙스 레전드의 맵 로테이션 정보를 확인합니다.");
 	const gamemode = useString("게임모드", "특정 게임모드의 맵 정보를 확인합니다.", {
 		required: false,
