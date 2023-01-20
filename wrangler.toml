@@ -1,7 +1,7 @@
 workers_dev = false
 
 name = "hatch-bot"
-main = "./dist/server.mjs"
+main = "./dist/server.js"
 compatibility_date = "2022-12-14"
 
 no_bundle = true

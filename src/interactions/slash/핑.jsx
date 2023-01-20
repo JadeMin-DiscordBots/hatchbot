@@ -15,6 +15,7 @@ const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 export default () => {
 	useDescription("Cloudflare Workers 딜레이를 확인합니다.");
 	const firstTime = Date.now();
+	
 
 	return (interaction, workerConfig, workerContext) => {
 		workerContext.waitUntil((async () => {

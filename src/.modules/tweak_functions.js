@@ -108,6 +108,10 @@ export class NEIS_API {
 		};
 	};
 };
+
+
+
+
 export class SSHOT_API {
 	/**
 	 * @param {String} token Screenshot API 인증 키
@@ -210,7 +214,7 @@ export class WebLogger {
 		console.log(message);
 
 		if(message.constructor === Object) {
-			const stringifiedMsg = this.#toString(message);
+			const stringifiedMsg = JSON.stringify(message, null, '\t');
 
 			if(stringifiedMsg.length > 2000) {
 				const warnMsg = "\n로그 메시지가 2000자를 초과하여 일부 내용이 누락되었습니다.\n[CloudFlare Workers](https://dash.cloudflare.com/?to=/:account/workers/overview)에서 전체 로그를 확인하세요.";

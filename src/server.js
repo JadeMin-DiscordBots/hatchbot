@@ -2,6 +2,7 @@ import { Router as IttyRouter } from 'itty-router';
 import { createHandler } from 'slshx';
 import onError from "./.modules/catch500";
 import interactions from "./interactions/all";
+import messages from "./messages/all";
 const Router = IttyRouter();
 const options = {
 	applicationId: env.APPLICATION_ID,
@@ -19,6 +20,13 @@ const options = {
 Router.post('/interaction', async (request, workerSecret, workerContext) => {
 	try {
 		return await createHandler(options)(request, workerSecret, workerContext);
+	} catch(error) {
+		return await onError(error);
+	}
+});
+Router.post('/message', async (request, workerSecret, workerContext) => {
+	try {
+		return await messages(request, workerSecret, workerContext);
 	} catch(error) {
 		return await onError(error);
 	}
