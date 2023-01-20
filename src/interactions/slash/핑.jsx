@@ -22,7 +22,7 @@ export default () => {
 				<Message>핑을 확인하는 중입니다...</Message>
 			));
 			await editOriginalInteractionResponse(env.APPLICATION_ID, interaction.token, (
-				<Message>핑: {Date.now() - firstTime}</Message>
+				<Message>핑: `{Date.now() - firstTime}ms`</Message>
 			));
 		})());
 
