@@ -10,8 +10,7 @@ import {
 	Fragment, Message, Embed, Field, Modal, Button, Input, Row,
 	useButton, useModal, useInput,
 
-	getOriginalInteractionResponse,
-	editOriginalInteractionResponse,
+	getOriginalInteractionResponse
 } from 'slshx';
 luxonSetup(Settings);
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
@@ -20,8 +19,8 @@ export default () => {
 	useDescription("Cloudflare Workers와 디스코드 사이의 딜레이를 확인합니다.");
 	const respondDate = Date.now();
 
-
-	return async function*(interaction, workerConfig, workerContext) {
+	
+	return async function*(interaction) {
 		yield;
 		const originalMsg = await getOriginalInteractionResponse(interaction.application_id, interaction.token);
 		const timestamp = DateTime.fromISO(originalMsg.timestamp).toMillis();
