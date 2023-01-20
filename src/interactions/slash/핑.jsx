@@ -18,10 +18,10 @@ export default () => {
 
 	return (interaction, workerConfig, workerContext) => {
 		workerContext.waitUntil((async () => {
-			await editOriginalInteractionResponse(env.APPLICATION_ID, interaction.token, (
+			await editOriginalInteractionResponse(interaction.application_id, interaction.token, (
 				<Message>핑을 확인하는 중입니다...</Message>
 			));
-			await editOriginalInteractionResponse(env.APPLICATION_ID, interaction.token, (
+			await editOriginalInteractionResponse(interaction.application_id, interaction.token, (
 				<Message>핑: `{Date.now() - firstTime}ms`</Message>
 			));
 		})());

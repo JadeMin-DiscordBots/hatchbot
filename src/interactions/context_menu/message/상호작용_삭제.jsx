@@ -26,7 +26,7 @@ export default {
 				</Message>
 			);
 			
-			deleteFollowupMessage(env.APPLICATION_ID, interaction.token, targetMessage.id);
+			deleteFollowupMessage(interaction.application_id, interaction.token, targetMessage.id);
 			return (
 				<Message ephemeral>
 					메시지 삭제 요청을 전송했습니다.
