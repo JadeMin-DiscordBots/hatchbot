@@ -1,5 +1,7 @@
+import { DateTime, Settings } from 'luxon';
 import {
-	WebLogger
+	WebLogger,
+	luxonSetup
 } from "../../.modules/tweak_functions";
 import {
 	createElement,
@@ -8,25 +10,22 @@ import {
 	Fragment, Message, Embed, Field, Modal, Button, Input, Row,
 	useButton, useModal, useInput,
 
+	getOriginalInteractionResponse,
 	editOriginalInteractionResponse,
 } from 'slshx';
+luxonSetup(Settings);
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
 export default () => {
-	useDescription("Cloudflare Workers 딜레이를 확인합니다.");
-	const firstTime = Date.now();
-	
+	useDescription("Cloudflare Workers와 디스코드 사이의 딜레이를 확인합니다.");
+	const respondDate = Date.now();
 
-	return (interaction, workerConfig, workerContext) => {
-		workerContext.waitUntil((async () => {
-			await editOriginalInteractionResponse(interaction.application_id, interaction.token, (
-				<Message>핑을 확인하는 중입니다...</Message>
-			));
-			await editOriginalInteractionResponse(interaction.application_id, interaction.token, (
-				<Message>핑: `{Date.now() - firstTime}ms`</Message>
-			));
-		})());
 
-		return <Message>핑을 확인하는 중입니다...</Message>;
+	return async function*(interaction, workerConfig, workerContext) {
+		yield;
+		const originalMsg = await getOriginalInteractionResponse(interaction.application_id, interaction.token);
+		const timestamp = DateTime.fromISO(originalMsg.timestamp).toMillis();
+
+		return <Message>핑: `{timestamp - respondDate}ms`</Message>;
 	};
 };
