@@ -19,12 +19,12 @@ export default () => {
 	useDescription("Cloudflare Workers와 디스코드 사이의 딜레이를 확인합니다.");
 	const respondDate = Date.now();
 
-	
+
 	return async function*(interaction) {
 		yield;
 		const originalMsg = await getOriginalInteractionResponse(interaction.application_id, interaction.token);
 		const timestamp = DateTime.fromISO(originalMsg.timestamp).toMillis();
 
-		return <Message>핑: `{timestamp - respondDate}ms`</Message>;
+		return <Message>Latency: `{timestamp - respondDate}ms`</Message>;
 	};
 };
