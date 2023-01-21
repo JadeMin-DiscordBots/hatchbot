@@ -26,8 +26,7 @@ export default {
 			}]
 		});
 		const argv_msg = useString("메시지", "아름답게 내용할 메시지를 도킹하세요", {
-			required: true,
-			min:2, max:100
+			required: true
 		}) ?? 1;
 		const argv_repeat = useInteger("반복", "반복 횟수를 입력하세요", {
 			required: false,

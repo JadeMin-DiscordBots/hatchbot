@@ -11,7 +11,7 @@ import {
 	Fragment, Message, Embed, Field, Modal, Button, Input, Row,
 	useButton, useModal, useInput,
 } from 'slshx';
-import AutoComplete from "./components/AutoComplete";
+import AutoCompletes from "./components/AutoCompletes";
 luxonSetup(Settings);
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);
@@ -29,7 +29,7 @@ export default {
 		});
 		const DAY = useString("날짜", "날짜를 입력해주세요.", {
 			required: false,
-			autocomplete: ()=> AutoComplete.week(new DateTime(Date.now()))
+			autocomplete: ()=> AutoCompletes.getWeek(new DateTime(Date.now()))
 		}) ?? new DateTime(Date.now()).toISO();
 
 		

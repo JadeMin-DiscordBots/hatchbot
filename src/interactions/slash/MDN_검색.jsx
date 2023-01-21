@@ -17,8 +17,7 @@ export default {
 		"mdn_web": () => {
 			useDescription("MDN 웹 문서에서 JavaScript 문법을 검색합니다.");
 			const argv_query = useString("검색어", "검색할 문법을 입력해주세요.", {
-				required: true,
-				minLength:1, maxLength: 20
+				required: true
 			});
 
 
