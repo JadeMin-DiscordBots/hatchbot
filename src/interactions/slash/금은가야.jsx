@@ -1,4 +1,4 @@
-import { shuffle, reverse } from 'lodash';
+import { shuffle, reverse } from 'lodash-es';
 import {
 	WebLogger,
 	escape,

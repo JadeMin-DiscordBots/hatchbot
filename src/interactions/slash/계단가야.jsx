@@ -1,3 +1,4 @@
+import { range } from 'lodash-es';
 import {
 	WebLogger,
 	escape,
@@ -37,8 +38,8 @@ export default () => {
 		case "per_words": {
 			return () => {
 				const result = (() => {
-					const upstair = new Array(argv_repeat).map(i=> argv_msg.repeat(i + 1));
-					const downstair = new Array(argv_repeat).map(i=> argv_msg.repeat(i));
+					const upstair = range(argv_repeat).map(i=> argv_msg.repeat(i + 1));
+					const downstair = range(argv_repeat).map(i=> argv_msg.repeat(i));
 					return [...upstair, ...downstair.reverse()].join('\n');
 				})();
 
@@ -53,8 +54,8 @@ export default () => {
 			return () => {
 				const result = (() => {
 					const repeatedMsg = argv_msg.repeat(argv_repeat);
-					const upstair = new Array(repeatedMsg.length).map(i=> repeatedMsg.slice(0, i+1));
-					const downstair = new Array(repeatedMsg.length).map(i=> repeatedMsg.slice(0, i));
+					const upstair = range(repeatedMsg.length).map(i=> repeatedMsg.slice(0, i+1));
+					const downstair = range(repeatedMsg.length).map(i=> repeatedMsg.slice(0, i));
 					return [...upstair, ...downstair.reverse()].join('\n');
 				})();
 

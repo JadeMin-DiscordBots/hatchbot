@@ -16,7 +16,7 @@
 	},
 	"dependencies": {
 		"itty-router": "^3.0.11",
-		"lodash": "^4.17.21",
+		"lodash-es": "^4.17.21",
 		"luxon": "^3.2.1",
 		"slshx": "^0.3.0"
 	},
