@@ -11,13 +11,14 @@ const define = {
 	"env.APPLICATION_ID": JSON.stringify(env["APPLICATION_ID"]),
 	"env.PUBLIC_KEY": JSON.stringify(env["PUBLIC_KEY"]),
 	"env.SECRET_KEY": JSON.stringify(env["SECRET_KEY"]),
+	"env.SERVER_AUTH": JSON.stringify(env["SERVER_AUTH"]),
 	
 	"env.LOGHOOK_ID": JSON.stringify(env["LOGHOOK_ID"]),
 	"env.LOGHOOK_TOKEN": JSON.stringify(env["LOGHOOK_TOKEN"]),
 
 	"env.ALS_TOKEN": JSON.stringify(env["ALS_TOKEN"]),
 	"env.NEIS_TOKEN": JSON.stringify(env["NEIS_TOKEN"]),
-	"env.SCREENSHOT_TOKEN": JSON.stringify(env["SCREENSHOT_TOKEN"]),
+	"env.SSHOT_TOKEN": JSON.stringify(env["SSHOT_TOKEN"]),
 };
 await ESBuild.build({
 	entryPoints: [`src/${isDeployMode? 'deploy':'server'}.js`],

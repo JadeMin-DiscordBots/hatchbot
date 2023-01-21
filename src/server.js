@@ -3,6 +3,7 @@ import { createHandler } from 'slshx';
 import onError from "./.modules/catch500";
 import interactions from "./interactions/all";
 import messages from "./messages/all";
+
 const Router = IttyRouter();
 const options = {
 	applicationId: env.APPLICATION_ID,
@@ -25,6 +26,9 @@ Router.post('/interaction', async (request, workerSecret, workerContext) => {
 	}
 });
 Router.post('/message', async (request, workerSecret, workerContext) => {
+	if(request.headers.get('Authorization') !== env.SERVER_AUTH) {
+		return new Response("Unauthorized", {status: 401});
+	}
 	try {
 		return await messages(request, workerSecret, workerContext);
 	} catch(error) {

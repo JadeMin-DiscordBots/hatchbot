@@ -16,7 +16,7 @@ luxonSetup(Settings);
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
 export default () => {
-	useDescription("Cloudflare Workers와 디스코드 사이의 딜레이를 확인합니다.");
+	useDescription("Discord 엔드포인트의 딜레이를 확인합니다.");
 	const respondDate = Date.now();
 
 
@@ -25,6 +25,6 @@ export default () => {
 		const originalMsg = await getOriginalInteractionResponse(interaction.application_id, interaction.token);
 		const timestamp = DateTime.fromISO(originalMsg.timestamp).toMillis();
 
-		return <Message>Latency: `{timestamp - respondDate}ms`</Message>;
+		return <Message>Latency `{timestamp - respondDate}ms`</Message>;
 	};
 };

@@ -10,7 +10,7 @@ import {
 	useButton, useModal, useInput,
 } from 'slshx';
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
-const SSHOT = new SSHOT_API(env.SCREENSHOT_TOKEN);
+const SSHOT = new SSHOT_API(env.SSHOT_TOKEN);
 
 export default () => {
 	useDescription("특정 사이트의 스크린샷을 찍습니다. (관리자 전용)");

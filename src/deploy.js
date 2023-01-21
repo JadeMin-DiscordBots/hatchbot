@@ -2,6 +2,7 @@ import { Router as IttyRouter } from 'itty-router';
 import { deployCommands } from 'slshx';
 import onError from "./.modules/catch500";
 import interactions from "./interactions/all";
+
 const Router = IttyRouter();
 const options = {
 	applicationId: env.APPLICATION_ID,
@@ -12,14 +13,11 @@ const options = {
 
 
 Router.post('/deploy', async (request) => {
-	if(request.headers.get('Authorization') !== options.applicationSecret) {
-		return new Response("Unauthorized", {status: 401});
-	}
 	await deployCommands(options);
 	return new Response("Successfully Deployed", {status: 200});
 });
 Router.post('*', async (request) => {
-	return new Response("Did you mean to send a request to \"/server\"?", {status: 404});
+	return new Response("Did you mean to send a request to \"/deploy\"?", {status: 404});
 });
 
 export default {
