@@ -26,7 +26,7 @@ Router.post('/interaction', async (request, workerSecret, workerContext) => {
 	}
 });
 Router.post('/message', async (request, workerSecret, workerContext) => {
-	if(request.headers.get('Authorization') !== env.SERVER_AUTH) {
+	if(request.headers.get('Authorization') !== env.BOT_TOKEN) {
 		return new Response("Unauthorized", {status: 401});
 	}
 	try {
