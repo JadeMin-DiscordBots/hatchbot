@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { random } from 'lodash';
 import {
 	WebLogger,
 	formatMinutes
@@ -25,7 +25,7 @@ export default () => {
 	return () => (
 		<Message>
 			<Embed title="도움말 목록을 불러오는 중입니다...">
-				{`예상 완료 시간 : \`${formatMinutes(_.random(96854851, 6857485141))}\``}
+				{`예상 완료 시간 : \`${formatMinutes(random(96854851, 6857485141))}\``}
 			</Embed>
 		</Message>
 	);

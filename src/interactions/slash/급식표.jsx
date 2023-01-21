@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { DateTime, Settings } from 'luxon';
 import {
 	WebLogger,

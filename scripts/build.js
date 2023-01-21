@@ -24,6 +24,7 @@ await ESBuild.build({
 	entryPoints: [`src/${isDeployMode? 'deploy':'server'}.js`],
 	outfile: "dist/server.js",
 
+	platform: 'neutral',
 	format: 'esm',
 	target: 'esnext',
 	

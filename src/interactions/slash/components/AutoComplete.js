@@ -1,9 +1,9 @@
-import _ from 'lodash';
+import { range } from 'lodash';
 
 
 export default {
 	week: (dateTime) => {
-		const autocompleted = _.range(1, 8).map(day => {
+		const autocompleted = range(1, 8).map(day => {
 			const thisDate = dateTime.plus({days: day});
 
 			return {

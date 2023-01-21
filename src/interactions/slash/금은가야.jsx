@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { shuffle, reverse } from 'lodash';
 import {
 	WebLogger,
 	escape,
@@ -30,12 +30,12 @@ export default () => {
 	const [repeat_id, repeat_value] = useInput();
 	const shuffleModal_id = useModal(() => {
 		const msg = input_value.repeat(+repeat_value.replace(/[^0-9]*/g, '') || 1);
-		const result = _.shuffle(msg.split('')).join('');
+		const result = shuffle(msg.split('')).join('');
 		return <Message>{escape.all(result).substring(0, 1999)}</Message>;
 	});
 	const reverseModal_id = useModal(() => {
 		const msg = input_value.repeat(+repeat_value.replace(/[^0-9]*/g, '') || 1);
-		const result = (msg.split('').reverse()).join('');
+		const result = reverse(msg.split('')).join('');
 		return <Message>{escape.all(result).substring(0, 1999)}</Message>;
 	});
 
