@@ -20,7 +20,7 @@ const define = {
 	"env.NEIS_TOKEN": JSON.stringify(env["NEIS_TOKEN"]),
 	"env.SSHOT_TOKEN": JSON.stringify(env["SSHOT_TOKEN"]),
 };
-await ESBuild.context({
+await ESBuild.build({
 	entryPoints: [`src/${isDeployMode? 'deploy':'server'}.js`],
 	outfile: "dist/server.js",
 

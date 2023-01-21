@@ -25,6 +25,17 @@ Response.prototype.waitForBody = async function(){
 
 
 
+export const MDN_API = {
+	"baseUrl": "https://developer.mozilla.org",
+	"search": async (query) => {
+		const response = await fetch(`https://developer.mozilla.org/api/v1/search?q=${query}&locale=ko`);
+		
+		return {
+			query,
+			data: await response.json()
+		}
+	}
+};
 export class ALS_API {
 	/**
 	 * @param {String} token Apex Legends Status의 API 인증 키
@@ -108,10 +119,6 @@ export class NEIS_API {
 		};
 	};
 };
-
-
-
-
 export class SSHOT_API {
 	/**
 	 * @param {String} token Screenshot API 인증 키
@@ -155,10 +162,6 @@ export class SSHOT_API {
 		}
 	};
 };
-
-
-
-
 export class WebLogger {
 	/**
 	 * @param {String} id 웹훅 아이디
