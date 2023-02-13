@@ -30,7 +30,7 @@ Router.post('/message', async (request, workerSecret, workerContext) => {
 		return new Response("Unauthorized", {status: 401});
 	}
 	try {
-		return await messages(request, workerSecret, workerContext);
+		return await messages(await request.json(), workerSecret, workerContext);
 	} catch(error) {
 		return await onError(error);
 	}
