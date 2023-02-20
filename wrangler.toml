@@ -1,13 +1,13 @@
-workers_dev = false
+workers_dev = true
 
-name = "hatch-bot"
+name = "hatch-discordbot"
 main = "./dist/server.js"
 compatibility_date = "2022-12-14"
 
 no_bundle = true
 minify = false
 
-route = { zone_name="klartnet.ml", pattern="hatch-bot.discord.klartnet.ml", custom_domain=true }
+#route = { zone_name="klartnet.ml", pattern="hatch-bot.discord.klartnet.ml", custom_domain=true }
 
 
 
@@ -16,4 +16,7 @@ command = "npm run build:publish"
 
 
 [miniflare]
+kv_persist = true
+cache_persist = true
+durable_objects_persist = true
 global_async_io = true # Required by Slshx

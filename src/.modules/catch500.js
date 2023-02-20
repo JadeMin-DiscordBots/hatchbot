@@ -17,6 +17,4 @@ export default async (error) => {
 			timestamp: new DateTime(Date.now())
 		}]
 	});
-	
-	throw error;
 };

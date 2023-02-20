@@ -12,7 +12,7 @@ import {
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 
 export default {
-	"봇 메시지 삭제 (베타)": () => {
+	"봇 메시지 삭제": () => {
 		return (interaction, cfg, ctx, targetMessage) => {
 			// 만약 메시지가 상호작용 메시지라면
 			if(!targetMessage.hasOwnProperty('interaction')) return (

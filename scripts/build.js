@@ -11,11 +11,10 @@ const define = {
 	"env.APPLICATION_ID": JSON.stringify(env["APPLICATION_ID"]),
 	"env.PUBLIC_KEY": JSON.stringify(env["PUBLIC_KEY"]),
 	"env.SECRET_KEY": JSON.stringify(env["SECRET_KEY"]),
-	"env.BOT_TOKEN": JSON.stringify(env["BOT_TOKEN"]),
 	
 	"env.LOGHOOK_ID": JSON.stringify(env["LOGHOOK_ID"]),
 	"env.LOGHOOK_TOKEN": JSON.stringify(env["LOGHOOK_TOKEN"]),
-
+	
 	"env.ALS_TOKEN": JSON.stringify(env["ALS_TOKEN"]),
 	"env.NEIS_TOKEN": JSON.stringify(env["NEIS_TOKEN"]),
 	"env.SSHOT_TOKEN": JSON.stringify(env["SSHOT_TOKEN"]),
