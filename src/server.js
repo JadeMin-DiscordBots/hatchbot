@@ -16,6 +16,7 @@ const handler = createHandler(options);
 
 Router.post('/interaction', async (request, workerSecret, workerContext) => {
 	try {
+		//@ts-expect-error
 		return await handler(request, workerSecret, workerContext);
 	} catch(error) {
 		await onError(error);
