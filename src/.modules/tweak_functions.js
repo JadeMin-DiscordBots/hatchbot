@@ -315,7 +315,7 @@ export const escape = {
 /**
  * Luxon의 설정을 기본값으로 지정합니다.
  * 
- * @param {Settings} LuxonSettings 이스케이핑할 문자열
+ * @param {Settings} LuxonSettings Luxon Settings 오브젝트
  * @returns {Settings} 기본값으로 변환된 Luxon.Setttings
  */
 export const luxonSetup = (LuxonSettings) => {
