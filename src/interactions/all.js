@@ -2,7 +2,7 @@ import userCTXM from "./context_menu/user/*.jsx";
 import messageCTXM from "./context_menu/message/*.jsx";
 import slashCMD from "./slash/*.jsx";
 //const slash_commands = require("./slash/*.jsx");
-let exports = {
+const exports = {
 	userCommands: {},
 	messageCommands: {},
 	commands: {}

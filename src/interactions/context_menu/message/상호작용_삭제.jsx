@@ -20,7 +20,7 @@ export default {
 					해당 메시지는 명령어 메시지가 아닙니다.
 				</Message>
 			);
-			if(interaction.member.user.id !== targetMessage.interaction.user.id) return (
+			if(targetMessage.interaction.user.id !== interaction.member?.user.id) return (
 				<Message ephemeral>
 					해당 명령어를 사용한 사용자만 삭제할 수 있습니다.
 				</Message>

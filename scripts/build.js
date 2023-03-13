@@ -22,6 +22,7 @@ const define = {
 await ESBuild.build({
 	entryPoints: [`src/${isDeployMode? 'deploy':'server'}.js`],
 	outfile: "dist/server.js",
+	charset: 'utf8',
 
 	format: 'esm',
 	target: 'esnext',
