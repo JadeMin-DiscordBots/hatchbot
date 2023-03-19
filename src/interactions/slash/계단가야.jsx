@@ -32,6 +32,10 @@ export default {
 			required: false,
 			min:2, max:100
 		}) ?? 1;
+		/* TODO: 공백 제거 기능 구현
+		const argv_noSpace = useBoolean("공백", "공백을 제거하면 계단이 구불구불해지는 현상을 최소화할 수 있습니다.", {
+			required: false
+		}) ?? false;*/
 
 
 		switch(argv_type){
