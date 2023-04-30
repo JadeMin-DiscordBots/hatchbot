@@ -18,15 +18,15 @@
 		"build:deploy": "node --no-warnings --experimental-vm-modules ./scripts/build.js deploy"
 	},
 	"dependencies": {
-		"itty-router": "^3.0.11",
+		"itty-router": "^3.0.12",
 		"lodash-es": "^4.17.21",
-		"luxon": "^3.2.1",
+		"luxon": "^3.3.0",
 		"slshx": "^0.3.0"
 	},
 	"devDependencies": {
-		"esbuild": "^0.17.10",
+		"esbuild": "^0.17.18",
 		"esbuild-plugin-import-glob": "^0.1.1",
-		"miniflare": "^2.12.1",
-		"wrangler": "^2.10.0"
+		"miniflare": "^2.13.0",
+		"wrangler": "^2.17.0"
 	}
 }
