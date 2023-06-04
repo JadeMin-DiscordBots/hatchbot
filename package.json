@@ -10,7 +10,7 @@
 		"publish:log-json": "npm run publish && npm run log-json",
 		"local": "wrangler dev -l",
 
-		"deploy": "node --no-warnings --experimental-vm-modules ./scripts/deploy.js && npm run publish",
+		"deploy": "npm run build:deploy && node --no-warnings --experimental-vm-modules ./scripts/deploy.js && npm run publish",
 		"deploy:log": "npm run deploy && npm run log",
 		"deploy:log-json": "npm run deploy && npm run log-json",
 
@@ -18,15 +18,15 @@
 		"build:deploy": "node --no-warnings --experimental-vm-modules ./scripts/build.js deploy"
 	},
 	"dependencies": {
-		"itty-router": "^3.0.12",
+		"itty-router": "^4.0.9",
 		"lodash-es": "^4.17.21",
 		"luxon": "^3.3.0",
 		"slshx": "^0.3.0"
 	},
 	"devDependencies": {
-		"esbuild": "^0.17.18",
+		"esbuild": "^0.17.19",
 		"esbuild-plugin-import-glob": "^0.1.1",
-		"miniflare": "^2.13.0",
-		"wrangler": "^2.17.0"
+		"miniflare": "^3.0.1",
+		"wrangler": "^3.0.1"
 	}
 }

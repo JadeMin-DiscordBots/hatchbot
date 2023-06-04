@@ -33,7 +33,7 @@ export default {
 		}) ?? new DateTime(Date.now()).toISO();
 
 		
-		const readableDate = DateTime.fromISO(DAY).toFormat("MM월 dd일(EEE)");
+		const readableDate = DateTime.fromISO(DAY).toFormat("EEEE(MM월 dd일)");
 		const options = {
 			"ATPT_OFCDC_SC_CODE": "J10",
 			"SD_SCHUL_CODE": "7530474",
@@ -66,7 +66,9 @@ export default {
 						</Embed>
 						:
 						<Embed
-							title={`:calendar_spiral: ${api.data[0].GRADE}학년 ${api.data[0].CLASS_NM}반 시간표`}
+							title={
+								`:calendar_spiral: ${api.data[0].GRADE}학년 ${api.data[0].CLASS_NM}반 시간표`
+							}
 							footer={readableDate}
 						>
 							{api.data.map((time, index) => (

@@ -13,7 +13,7 @@ import {
 } from 'slshx';
 import AutoCompletes from "./components/AutoCompletes";
 import Meal from "./components/급식";
-luxonSetup(Settings)
+luxonSetup(Settings);
 const Logger = new WebLogger(env.LOGHOOK_ID, env.LOGHOOK_TOKEN);
 const NEIS = new NEIS_API(env.NEIS_TOKEN);
 
@@ -29,7 +29,7 @@ export default {
 		});
 
 
-		const readableDate = DateTime.fromISO(DAY).toFormat("MM월 dd일(EEE)");
+		const readableDate = DateTime.fromISO(DAY).toFormat("EEEE(M월 d일)");
 		const options = {
 			"ATPT_OFCDC_SC_CODE": "J10",
 			"SD_SCHUL_CODE": "7530474",
