@@ -8,7 +8,8 @@ no_bundle = true
 minify = false
 
 [placement]
-mode = "smart"
+# "off" or "smart"
+mode = "off"
 
 #route = { zone_name="klartnet.ml", pattern="hatch-bot.discord.klartnet.ml", custom_domain=true }
 
